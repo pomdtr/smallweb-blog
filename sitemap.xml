@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>http://localhost/</loc>
+    <lastmod>2024-07-21T11:08:05.983Z</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost/archive/</loc>
+    <lastmod>2024-07-21T11:08:05.983Z</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost/archive/article/</loc>
+    <lastmod>2024-07-21T11:08:05.983Z</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost/archive/release/</loc>
+    <lastmod>2024-07-21T11:08:05.983Z</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost/author/achille-lacoin/</loc>
+    <lastmod>2024-07-21T11:08:05.983Z</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost/contact/</loc>
+    <lastmod>2024-07-21T11:08:05.983Z</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost/posts/routing-desing/</loc>
+    <lastmod>2024-07-11T00:00:00.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost/posts/v0.10/</loc>
+    <lastmod>2024-07-13T00:00:00.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost/posts/v0.11/</loc>
+    <lastmod>2024-07-17T00:00:00.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost/posts/v0.9/</loc>
+    <lastmod>2024-07-12T00:00:00.000Z</lastmod>
+  </url>
+</urlset>
