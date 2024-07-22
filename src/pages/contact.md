@@ -9,3 +9,4 @@ menu:
 
 - Twitter: [@pomdtrr](https://twitter.com/pomdtrr)
 - Github: [pomdtr](https://github.com/pomdtr)
+- Discord: [Smallweb](https://discord.gg/BsgQK42qZe)

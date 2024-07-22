@@ -32,6 +32,8 @@ In this post, I'll try to address:
 - the drawbacks of the previous convention
 - the options I've considered
 
+<!-- more -->
+
 ## Why a change was needed
 
 The smallweb routing system was originally designed for a single usecase:
