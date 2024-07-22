@@ -78,7 +78,7 @@
     <header class="post-header">
       <h2 class="post-title">
         <a href="/posts/v0.11/">
-          Smallweb 0.11 - Global Config and New Routing System
+          Smallweb 0.11 - Global config and new routing
         </a>
       </h2>
 
@@ -126,37 +126,6 @@
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p>Smallweb also supports the following environment variables:</p>
-<ul>
-<li><code>SMALLWEB_HOST</code></li>
-<li><code>SMALLWEB_PORT</code></li>
-</ul>
-<h2>Config Based Routing</h2>
-<p>You might have noticed the new <code>domains</code> key in the global config.</p>
-<p>It's part of a new routing system that allows you to map domains to folders in your filesystem.</p>
-<p>For example, you can map:</p>
-<ul>
-<li><code>pomdtr.me</code> to <code>~/pomdtr.me</code>: All requests to <code>pomdtr.me</code> will be served from the <code>~/pomdtr.me</code> folder.</li>
-<li><code>*.smallweb.run</code> to <code>~/smallweb.run/*</code>: All requests to <code>&lt;app&gt;.smallweb.run</code> will be served from the <code>~/smallweb.run/&lt;app&gt;</code> folder.</li>
-<li><code>*.example.me</code> to <code>~/example.com</code>: All requests to <code>*.example.me</code> will be served from the <code>~/example.com</code> folder.</li>
-</ul>
-<p>The config is live-reloaded, so you can change it on the fly.</p>
-<p>I hope this new system will allows advanced users to handle more advanced routing scenarios, while keeping the simplicity of the original system.</p>
-<p>This change also means that the notion of a "smallweb root" is now deprecated. You can put your smallweb apps anywhere in your filesystem.</p>
-<h2><code>smallweb open</code></h2>
-<p>Smallweb open now works on top of directories.</p>
-<p>To open the app from the current directory in your browser, you can run:</p>
-<pre class="language-sh" tabindex="0"><code class="language-sh">smallweb <span class="token function">open</span> <span class="token builtin class-name">.</span>
-</code></pre>
-<p>Or do something like this if you have a blog stored at <code>~/localhost/blog</code>:</p>
-<pre class="language-sh" tabindex="0"><code class="language-sh">smallweb <span class="token function">open</span> ~/localhost/blog
-</code></pre>
-<h2><code>smallweb create</code> -&gt; <code>smallweb init</code></h2>
-<p><code>smallweb create</code> was replaced by <code>smallweb init</code>.</p>
-<p>If you want <code>smallweb init</code>, you'll get an interactive prompt to create a new project.</p>
-<p>You can also skip the prompts by passing the appropriate args and flags.</p>
-<pre class="language-sh" tabindex="0"><code class="language-sh">smallweb init ~/localhost/hono-app <span class="token parameter variable">--template</span> hono
-</code></pre>
     </div>
 
     <a href="/posts/v0.11/" class="post-link">
@@ -168,7 +137,7 @@
     <header class="post-header">
       <h2 class="post-title">
         <a href="/posts/v0.10/">
-          Smallweb 0.10 - Cron Jobs!
+          Smallweb 0.10 - Cron jobs are here!
         </a>
       </h2>
 
@@ -216,33 +185,6 @@ You can now defines them from the <code>smallweb.json[c]</code> file.</p>
   <span class="token punctuation">]</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p>Cron jobs are defined by a name, a schedule, a command, and optional arguments.</p>
-<p>The minimum schedule is <code>* * * * *</code> which means every minute. <a href="https://crontab.guru/">crontab.guru</a> is a great tool to help you define your schedule.</p>
-<p>Additionally, two new commands were added to manage cron jobs:</p>
-<ul>
-<li><code>smallweb cron list</code> to list all cron jobs</li>
-<li><code>smallweb cron trigger</code> to trigger a cron job manually</li>
-</ul>
-<p>Make sure to setup the completions for your shell to get the full experience.</p>
-<p>More information can be found in the <a href="https://docs.smallweb.run/guides/cron.html">documentation</a>.</p>
-<h2><code>smallweb create</code> is now interactive</h2>
-<p>You can now just run <code>smallweb create</code> to initialize a new project.</p>
-<p>It will ask you a few questions and generate a new project for you.
-You can skip the questions by passing the <code>--name</code> and <code>--template</code> flags.</p>
-<h2>What's next?</h2>
-<p>I want to focus on improving the logs experience in the next release.</p>
-<p>Currently, all logs are grouped together, and there is no way to filter between:</p>
-<ul>
-<li>system logs (ex: http requests)</li>
-<li>application logs (ex: stdout/stderr)</li>
-</ul>
-<p>The user should also be able to filter logs by domain, or application.</p>
-<p>In order to achieve this, I'm thinking of emitting logs as json to stdout, and converting them to human readable format in the cli.</p>
-<p>I also plan to work on:</p>
-<ul>
-<li>a landing page for smallweb</li>
-<li>a demo video showcasing the features</li>
-</ul>
     </div>
 
     <a href="/posts/v0.10/" class="post-link">
@@ -310,30 +252,6 @@ now look like:</p>
     └── readme
         └── main.ts
 </code></pre>
-<p>The first level of subfolder is the apex domain, and the second one is the
-subdomain.</p>
-<ul>
-<li><code>https://assets.smallweb.run</code> will be routed to
-<code>~/smallweb/smallweb.run/assets/</code></li>
-<li><code>react.localhost</code> will be routed to <code>~/smallweb/localhost/react/</code></li>
-</ul>
-<p>Request targeting the apex domain will be automatically redirected to the <code>www</code>
-subdomain.</p>
-<p>You can read more about the design process in the
-<a href="/blog/routing-design.md">dedicated blog post</a>.</p>
-<h2>smallweb list</h2>
-<p>The smallweb dump command was renamed to <code>smallweb list</code>.</p>
-<p>Smallweb list supports both human and machine readable output (with a <code>--json</code>
-flag).</p>
-<p>You can filter by domain using the <code>--domain</code> flag.</p>
-<h2>smallweb open</h2>
-<p>The <code>smallweb open</code> command can now open smallweb websites, even when your
-current directory is not the root of a smallweb app.</p>
-<p>Just pass the app name to the command:</p>
-<pre class="language-sh" tabindex="0"><code class="language-sh">smallweb <span class="token function">open</span> react.localhost
-</code></pre>
-<p>The command provides completions, make sure to set them properly. You can get
-shell specific instructions using the <code>smallweb help completion</code> command.</p>
     </div>
 
     <a href="/posts/v0.9/" class="post-link">

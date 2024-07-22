@@ -5,11 +5,11 @@
     <link>http://localhost/</link>
     <atom:link href="http://localhost/feed.xml" rel="self" type="application/rss+xml"/>
     <description>The latest new from Smallweb</description>
-    <lastBuildDate>Sun, 21 Jul 2024 11:12:38 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jul 2024 22:03:08 GMT</lastBuildDate>
     <language>en</language>
     <generator>Lume v2.2.2</generator>
     <item>
-      <title>Smallweb 0.11 - Global Config and New Routing System</title>
+      <title>Smallweb 0.11 - Global config and new routing</title>
       <link>http://localhost/posts/v0.11/</link>
       <guid isPermaLink="false">http://localhost/posts/v0.11/</guid>
       <content:encoded>
@@ -27,6 +27,7 @@
     }
 }
 </code></pre>
+<!-- more -->
 <p>Smallweb also supports the following environment variables:</p>
 <ul>
 <li><code>SMALLWEB_HOST</code></li>
@@ -63,7 +64,7 @@
       <pubDate>Wed, 17 Jul 2024 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Smallweb 0.10 - Cron Jobs!</title>
+      <title>Smallweb 0.10 - Cron jobs are here!</title>
       <link>http://localhost/posts/v0.10/</link>
       <guid isPermaLink="false">http://localhost/posts/v0.10/</guid>
       <content:encoded>
@@ -81,6 +82,7 @@ You can now defines them from the <code>smallweb.json[c]</code> file.</p>
   ]
 }
 </code></pre>
+<!-- more -->
 <p>Cron jobs are defined by a name, a schedule, a command, and optional arguments.</p>
 <p>The minimum schedule is <code>* * * * *</code> which means every minute. <a href="https://crontab.guru/">crontab.guru</a> is a great tool to help you define your schedule.</p>
 <p>Additionally, two new commands were added to manage cron jobs:</p>
@@ -139,6 +141,7 @@ now look like:</p>
     └── readme
         └── main.ts
 </code></pre>
+<!-- more -->
 <p>The first level of subfolder is the apex domain, and the second one is the
 subdomain.</p>
 <ul>
@@ -169,8 +172,8 @@ shell specific instructions using the <code>smallweb help completion</code> comm
     </item>
     <item>
       <title>Rethinking Smallweb Routing</title>
-      <link>http://localhost/posts/routing-desing/</link>
-      <guid isPermaLink="false">http://localhost/posts/routing-desing/</guid>
+      <link>http://localhost/posts/routing-design/</link>
+      <guid isPermaLink="false">http://localhost/posts/routing-design/</guid>
       <content:encoded>
         <![CDATA[<p>Smallweb <code>v0.8.0</code> was released yesterday, and it included the first smallweb
 breaking change.</p>
@@ -197,7 +200,8 @@ I would prefer a convention like <code>~/smallweb/localhost/example</code> mappi
 <li>the drawbacks of the previous convention</li>
 <li>the options I've considered</li>
 </ul>
-<h2 id="why-a-change-was-needed" tabindex="-1"><a href="http://localhost/posts/routing-desing/#why-a-change-was-needed" class="header-anchor">Why a change was needed</a></h2>
+<!-- more -->
+<h2 id="why-a-change-was-needed" tabindex="-1"><a href="http://localhost/posts/routing-design/#why-a-change-was-needed" class="header-anchor">Why a change was needed</a></h2>
 <p>The smallweb routing system was originally designed for a single usecase:
 hosting a unlimited amount of websites locally, using <code>*.localhost</code> domains.</p>
 <p>The convention was to:</p>
@@ -215,7 +219,7 @@ map to <code>https://example.pomdtr.me</code>.</p>
 both <code>*.pomdtr.me</code> and <code>*.smallweb.run</code> to my machine, <code>~/www/example</code> will
 match both <code>https://example.pomdtr.me</code> and <code>https://example.smallweb.run</code>. This
 is probably not what the user want in most cases.</p>
-<h2 id="options-i've-considered" tabindex="-1"><a href="http://localhost/posts/routing-desing/#options-i've-considered" class="header-anchor">Options I've considered</a></h2>
+<h2 id="options-i've-considered" tabindex="-1"><a href="http://localhost/posts/routing-design/#options-i've-considered" class="header-anchor">Options I've considered</a></h2>
 <p>Let's say we want to manage the following websites using smallweb.</p>
 <ul>
 <li><code>https://smallweb.run</code></li>
@@ -226,7 +230,7 @@ is probably not what the user want in most cases.</p>
 <li><code>https://react.localhost</code></li>
 </ul>
 <p>We'll assume that all of these websites are defined in a single <code>main.ts</code>.</p>
-<h3 id="option-1%3A-not-using-the-folder-name" tabindex="-1"><a href="http://localhost/posts/routing-desing/#option-1%3A-not-using-the-folder-name" class="header-anchor">Option 1: Not using the folder name</a></h3>
+<h3 id="option-1%3A-not-using-the-folder-name" tabindex="-1"><a href="http://localhost/posts/routing-design/#option-1%3A-not-using-the-folder-name" class="header-anchor">Option 1: Not using the folder name</a></h3>
 <p>We could just allow arbitrary folder names, and just use a CNAME at the root of
 the app, specifying the domain name.</p>
 <pre><code class="language-txt">assets.smallweb.run
@@ -235,7 +239,7 @@ the app, specifying the domain name.</p>
 need to include it. I really want single-file websites to be able to exist, and
 I feel like file based routing is a core feature of smallweb, so I did not go
 with this option.</p>
-<h3 id="option-2%3A-using-a-nested-structure" tabindex="-1"><a href="http://localhost/posts/routing-desing/#option-2%3A-using-a-nested-structure" class="header-anchor">Option 2: Using a Nested structure</a></h3>
+<h3 id="option-2%3A-using-a-nested-structure" tabindex="-1"><a href="http://localhost/posts/routing-design/#option-2%3A-using-a-nested-structure" class="header-anchor">Option 2: Using a Nested structure</a></h3>
 <pre><code class="language-txt">/
 ├── localhost
 │   ├── example
@@ -287,7 +291,7 @@ it will be automatically redirected to the <code>www</code> domain.</p>
 are supposed to group related websites, but websites sharing the same TLD
 probably have nothing in common.</p>
 <p>Even worse, <code>pomdtr.me</code> requires 3 (!!!) level of nesting: <code>/me/pomdtr/www</code>.</p>
-<h3 id="option-3%3A-2-level-structure" tabindex="-1"><a href="http://localhost/posts/routing-desing/#option-3%3A-2-level-structure" class="header-anchor">Option 3: 2-level structure</a></h3>
+<h3 id="option-3%3A-2-level-structure" tabindex="-1"><a href="http://localhost/posts/routing-design/#option-3%3A-2-level-structure" class="header-anchor">Option 3: 2-level structure</a></h3>
 <p>Instead of splitting on <code>.</code>, we'll use the apex domain as the first level of
 subfolder, and the subdomain as the second one.</p>
 <p>If a request target the apex domain, will automatically redirect it to the <code>www</code>
@@ -313,7 +317,7 @@ subdomain.</p>
 groups in exchange.</p>
 <p>Here the folder structure kind of reflect the process of updating DNS records in
 cloudflare.</p>
-<h3 id="option-4%3A-flat-structure" tabindex="-1"><a href="http://localhost/posts/routing-desing/#option-4%3A-flat-structure" class="header-anchor">Option 4: Flat structure</a></h3>
+<h3 id="option-4%3A-flat-structure" tabindex="-1"><a href="http://localhost/posts/routing-design/#option-4%3A-flat-structure" class="header-anchor">Option 4: Flat structure</a></h3>
 <p>Let's drop the nesting, and use the domain name as the folder name:</p>
 <pre><code class="language-txt">/
 ├── assets.smallweb.run
@@ -354,7 +358,7 @@ websites appears in different places in the file tree (ex: <code>react.localhost
 </code></pre>
 <p>I quite like this compromise, but I'm not sure it would address the noisyness
 reported by the community.</p>
-<h2 id="what-do-you-think-%3F" tabindex="-1"><a href="http://localhost/posts/routing-desing/#what-do-you-think-%3F" class="header-anchor">What do you think ?</a></h2>
+<h2 id="what-do-you-think-%3F" tabindex="-1"><a href="http://localhost/posts/routing-design/#what-do-you-think-%3F" class="header-anchor">What do you think ?</a></h2>
 <p>Here are the two options I'm considering as default:</p>
 <ol>
 <li>2-level structure</li>
