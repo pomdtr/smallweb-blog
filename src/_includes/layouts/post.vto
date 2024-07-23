@@ -49,18 +49,23 @@ bodyClass: body-post
   </aside>
   {{ /if }}
 
-  {{ if it.comments?.src }}
-  <aside class="comments-section">
-    <header class="comments-header">
-      <h2>{{ i18n.comments.title }}</h2>
-      <p>{{ i18n.comments.description.replace(":src:", it.comments.src) }}</p>
-    </header>
-    <mastodon-comments src="{{ it.comments.src }}" cache="{{ it.comments.cache ?? 60 }}" class="comments">
-      {{ i18n.comments.empty }}
-    </mastodon-comments>
-  {{ /if }}
-  </aside>
-</article>
+  <div class="comment-sections" style="padding-top: 30px;">
+    <script src="https://giscus.app/client.js"
+      data-repo="pomdtr/smallweb"
+      data-repo-id="R_kgDOL6UzRQ"
+      data-category="Announcements"
+      data-category-id="DIC_kwDOL6UzRc4CgZ6C"
+      data-mapping="title"
+      data-strict="0"
+      data-reactions-enabled="0"
+      data-emit-metadata="0"
+      data-input-position="bottom"
+      data-theme="preferred_color_scheme"
+      data-lang="en"
+      crossorigin="anonymous"
+      async>
+    </script>
+  </div>
 
 <nav class="page-pagination pagination">
   <ul>

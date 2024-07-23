@@ -1,6 +1,5 @@
 ---
 title: Rethinking Smallweb Routing
-date: 2024-07-11
 author: Achille Lacoin
 tags:
   - article
