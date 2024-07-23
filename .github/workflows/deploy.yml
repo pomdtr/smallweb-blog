@@ -1,4 +1,4 @@
-name: Build demo
+name: Deploy
 
 on:
   push:
@@ -29,7 +29,8 @@ jobs:
           publish_branch: smallweb
           publish_dir: ./_site
 
-      - name: Notify Smallweb Puller
+      # https://github.com/pomdtr/smallweb-puller
+      - name: Trigger Smallweb Puller
         run: |
           curl https://puller.smallweb.run -H "Content-Type: application/json" -d '{ "app": "blog.smallweb.run" }'
 
