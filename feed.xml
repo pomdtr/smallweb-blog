@@ -5,9 +5,81 @@
     <link>http://localhost/</link>
     <atom:link href="http://localhost/feed.xml" rel="self" type="application/rss+xml"/>
     <description>The latest new from Smallweb</description>
-    <lastBuildDate>Tue, 23 Jul 2024 09:24:31 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jul 2024 10:58:53 GMT</lastBuildDate>
     <language>en</language>
     <generator>Lume v2.2.2</generator>
+    <item>
+      <title>Why smallweb?</title>
+      <link>http://localhost/posts/why-smallweb/</link>
+      <guid isPermaLink="false">http://localhost/posts/why-smallweb/</guid>
+      <content:encoded>
+        <![CDATA[<p>Think about the last time you worked on a local project. You probably had to:</p>
+<ol>
+<li>Open your project in your favorite editor</li>
+<li>Start a development server</li>
+<li>Open your browser and navigate to <code>http://localhost:3000</code> or any other port</li>
+</ol>
+<p>There are a few things that are not great about this workflow:</p>
+<ol>
+<li>You have to go through a few manual steps to start your project. Why can't it be running all the time?</li>
+<li>Multiple projects can't run on the same port. You have to remember which project is running on which port.</li>
+<li>Using <code>http://</code> is very limiting. For example, you can't install a PWA if it's not served over HTTPS.</li>
+</ol>
+<!-- more -->
+<h2 id="why-can't-it-be-running-all-the-time%3F" tabindex="-1"><a href="http://localhost/posts/why-smallweb/#why-can't-it-be-running-all-the-time%3F" class="header-anchor">Why can't it be running all the time?</a></h2>
+<p>An elegant way to address some of these issues is to use a reverse proxy like caddy, and self-signed certificates. Your proxy configuration would look something like this:</p>
+<pre><code class="language-txt">website.localhost {
+  tls internal {
+    on_demand
+  }
+
+  reverse_proxy localhost:3000
+}
+</code></pre>
+<p>By setting up a reverse proxy, you can access your project using <code>https://website.localhost</code> instead of <code>http://localhost:3000</code>. This is a great improvement, but it's still not perfect: you still have to manually start your project.</p>
+<p>At this point you might be tempted to write a service that starts your project when you boot your computer. But this becomes cumbersome really fast, and it will end up consuming a lot of resources (each project on computer would be running all the time).</p>
+<h2 id="taking-inspiration-from-serverless" tabindex="-1"><a href="http://localhost/posts/why-smallweb/#taking-inspiration-from-serverless" class="header-anchor">Taking inspiration from Serverless</a></h2>
+<p>Platforms like <a href="https://vercel.com/">Vercel</a>, <a href="https://deno.com/deploy">Deno Deploy</a> or <a href="https://val.town/">Val Town</a> allow each user to host a unlimited amount of websites for free. How can they afford to do that? They don't run your code all the time. Instead, they start a new process when a request comes in, and they shut it down when it's done.</p>
+<p>This sounds like a great idea, could we do the same thing, but self-hosted? This is the idea behind smallweb.</p>
+<p>Instead of having all project running at all time, we will only have a single smallweb evaluation server running on port 7777.</p>
+<pre><code class="language-txt">*.localhost {
+  tls internal {
+    on_demand
+  }
+
+  reverse_proxy localhost:7777
+}
+</code></pre>
+<p>When a new request comes in, smallweb will map the hostname to a folder in your filesystem:</p>
+<pre><code class="language-txt">website.localhost -&gt; ~/localhost/website
+</code></pre>
+<p>Smallweb will then start a new process, and look for a <code>main.ts</code> file in the folder. If it finds one, it will evaluate it and proxy the response back.</p>
+<pre><code class="language-ts">// ~/localhost/website/main.ts
+
+export default {
+    fetch: (req: Request) =&gt; new Response(&quot;Hello, World!&quot;)
+}
+</code></pre>
+<pre><code class="language-console">$ curl https://website.localhost
+Hello, World!
+</code></pre>
+<h2 id="managing-servers-with-unix-commands" tabindex="-1"><a href="http://localhost/posts/why-smallweb/#managing-servers-with-unix-commands" class="header-anchor">Managing servers with unix commands</a></h2>
+<p>Since hostnames are mapped to folders in your filesystem, you can use unix commands to manage your servers.</p>
+<p>For example, you can clone a website by copying the folder:</p>
+<pre><code class="language-sh">$ cp -r ~/localhost/website ~/localhost/website-clone
+$ curl https://website-clone.localhost
+Hello, World!
+</code></pre>
+<p>If you want to rename it, use the <code>mv</code> command. To delete it, use the <code>rm</code> command.</p>
+<h2 id="running-smallweb-on-the-server" tabindex="-1"><a href="http://localhost/posts/why-smallweb/#running-smallweb-on-the-server" class="header-anchor">Running smallweb on the Server</a></h2>
+<p>I've focused on the local dev experience so far, but there is nothing stopping you from running smallweb on a server.</p>
+<p>In fact, this is how I host this blog, and every other <code>smallweb.run</code> websites from a 5$ Hetzner VPS.</p>
+<p>With smallweb running on my server, I can host as many websites as I want, as the amount of resouces consumed depends on the amount of traffic I get, not the amount of websites I have.</p>
+<p>As much my websites don't have any visitors, this is probably the right tradeoff to make 😅.</p>
+]]>
+      </content:encoded>
+      <pubDate>Tue, 23 Jul 2024 00:00:00 GMT</pubDate>
+    </item>
     <item>
       <title>Smallweb 0.12 - Publish and install flow for smallweb apps</title>
       <link>http://localhost/posts/v0.12/</link>
@@ -31,7 +103,7 @@
 <p>The new command usage is:</p>
 <pre><code class="language-ts">smallweb init [dir] [--template &lt;repo&gt;]
 </code></pre>
-<p>When you run <code>smallweb init example --template pomdtr/smallweb-template-astro</code>, smallweb will download the content of the <code>pomdtr/smallweb-template-astro</code> repository in the <code>example</code> folder (withouth creating a <code>.git</code> folder).</p>
+<p>When you run <code>smallweb init example --template pomdtr/smallweb-template-astro</code>, smallweb will download the content of the <code>pomdtr/smallweb-template-astro</code> repository in the <code>example</code> folder (without creating a <code>.git</code> folder).</p>
 <h2 id="crons-jobs-are-now-defined-as-http-requests" tabindex="-1"><a href="http://localhost/posts/v0.12/#crons-jobs-are-now-defined-as-http-requests" class="header-anchor">Crons jobs are now defined as HTTP requests</a></h2>
 <p>Crons uses to be defined as shell commands:</p>
 <pre><code class="language-json">{
@@ -88,7 +160,7 @@ const kv = await Deno.openKv()
 <pre><code class="language-ts">const kv = await Deno.openKv({ path: &quot;./kv.db&quot; })
 </code></pre>
 <h2 id="what's-next%3F" tabindex="-1"><a href="http://localhost/posts/v0.12/#what's-next%3F" class="header-anchor">What's next?</a></h2>
-<p>I really feel smallweb is in a good state right now, and I want to grow it's community. I just bought a new mike and as plan to record some videos to showcase smallweb features on Youtube and Twitter.</p>
+<p>I really feel smallweb is in a good state right now, and I want to grow its community. I just bought a new mic and plan to record some videos to showcase smallweb features on YouTube and Twitter.</p>
 <p>Improved logs are still a priority. I want to move logs to their own file instead of using stderr/stdout, and allow you to filter them by app/time by storing them as JSON lines.</p>
 <p>Now that we have an efficient way to distribute and install apps, I want to port more apps to smallweb. I hope you'll help me with this one!</p>
 <p>And finally, I plan to resume the work on smallweb sister project, smallbrowser.</p>

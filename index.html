@@ -77,6 +77,63 @@
   <article class="post">
     <header class="post-header">
       <h2 class="post-title">
+        <a href="/posts/why-smallweb/">
+          Why smallweb?
+        </a>
+      </h2>
+
+      <div class="post-details">
+  
+    
+    
+      <p>by Achille Lacoin</p>
+    
+  
+
+  <p>
+    <time datetime="2024-07-23 00:00:00">
+      July 23rd, 2024
+    </time>
+  </p>
+
+  <p>3 min read</p>
+
+  <div class="post-tags">
+    
+      
+
+      
+        <a data-pagefind-filter="filter" class="badge" href="/archive/article/">article</a>
+      
+    
+  </div>
+</div>
+
+    </header>
+
+    <div class="post-excerpt body">
+      <p>Think about the last time you worked on a local project. You probably had to:</p>
+<ol>
+<li>Open your project in your favorite editor</li>
+<li>Start a development server</li>
+<li>Open your browser and navigate to <code>http://localhost:3000</code> or any other port</li>
+</ol>
+<p>There are a few things that are not great about this workflow:</p>
+<ol>
+<li>You have to go through a few manual steps to start your project. Why can't it be running all the time?</li>
+<li>Multiple projects can't run on the same port. You have to remember which project is running on which port.</li>
+<li>Using <code>http://</code> is very limiting. For example, you can't install a PWA if it's not served over HTTPS.</li>
+</ol>
+    </div>
+
+    <a href="/posts/why-smallweb/" class="post-link">
+      Continue reading →
+    </a>
+  </article>
+
+  <article class="post">
+    <header class="post-header">
+      <h2 class="post-title">
         <a href="/posts/v0.12/">
           Smallweb 0.12 - Publish and install flow for smallweb apps
         </a>
@@ -182,65 +239,6 @@
     </div>
 
     <a href="/posts/v0.11/" class="post-link">
-      Continue reading →
-    </a>
-  </article>
-
-  <article class="post">
-    <header class="post-header">
-      <h2 class="post-title">
-        <a href="/posts/v0.10/">
-          Smallweb 0.10 - Cron jobs are here!
-        </a>
-      </h2>
-
-      <div class="post-details">
-  
-    
-    
-      <p>by Achille Lacoin</p>
-    
-  
-
-  <p>
-    <time datetime="2024-07-13 00:00:00">
-      July 13th, 2024
-    </time>
-  </p>
-
-  <p>1 min read</p>
-
-  <div class="post-tags">
-    
-      
-
-      
-        <a data-pagefind-filter="filter" class="badge" href="/archive/release/">release</a>
-      
-    
-  </div>
-</div>
-
-    </header>
-
-    <div class="post-excerpt body">
-      <h2>Smallweb now supports cron jobs</h2>
-<p>Cron jobs were one of the key features missing from smallweb.
-You can now defines them from the <code>smallweb.json[c]</code> file.</p>
-<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"crons"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-    <span class="token punctuation">{</span>
-      <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"my-cron-job"</span><span class="token punctuation">,</span>
-      <span class="token property">"schedule"</span><span class="token operator">:</span> <span class="token string">"0 0 * * *"</span><span class="token punctuation">,</span>
-      <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"echo"</span><span class="token punctuation">,</span>
-      <span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"hello world!"</span><span class="token punctuation">]</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">]</span>
-<span class="token punctuation">}</span>
-</code></pre>
-    </div>
-
-    <a href="/posts/v0.10/" class="post-link">
       Continue reading →
     </a>
   </article>
