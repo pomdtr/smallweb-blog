@@ -5,7 +5,7 @@
     <link>http://localhost/</link>
     <atom:link href="http://localhost/feed.xml" rel="self" type="application/rss+xml"/>
     <description>The latest new from Smallweb</description>
-    <lastBuildDate>Tue, 23 Jul 2024 08:50:02 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jul 2024 09:04:59 GMT</lastBuildDate>
     <language>en</language>
     <generator>Lume v2.2.2</generator>
     <item>
@@ -17,22 +17,21 @@
 <p>But this is still a big release! And it even contains a few breaking changes (don't worry, they are easy to fix).</p>
 <h2 id="smallweb-install%3A-a-new-convention-to-install-and-publish-smallweb-apps" tabindex="-1"><a href="http://localhost/posts/v0.12/#smallweb-install%3A-a-new-convention-to-install-and-publish-smallweb-apps" class="header-anchor"><code>smallweb install</code>: A new convention to install and publish smallweb apps</a></h2>
 <p>Smallweb now includes a new <code>smallweb install</code> command to install smallweb apps from the web.</p>
-<p>Smallweb apps work on top of github repositories. When you run <code>smallweb install pomdtr/example-app ~/localhost/smallweb-app</code>, smallweb will clone the <code>pomdtr/example-app</code> repository in the <code>~/localhost/smallweb-app</code> folder.</p>
+<p>Smallweb apps work on top of github repositories. When you run</p>
+<pre><code class="language-sh">smallweb install pomdtr/example-app ~/localhost/smallweb-app
+</code></pre>
+<p>smallweb will clone the <code>pomdtr/example-app</code> repository in the <code>~/localhost/smallweb-app</code> folder.</p>
 <!-- more -->
-<p>If the repository contains a <code>smallweb</code> branch, smallweb will checkout this branch. Otherwise, it will checkout the <code>main</code> branch. This allows you to have a build step in your repository, whose output is stored in the <code>smallweb</code> branch.</p>
+<p>If the repository contains a <code>smallweb</code> branch, smallweb will checkout this branch. Otherwise, it will checkout the <code>main</code> branch.</p>
 <p>This convention is really similar to how github pages work, and you can even repurposes github pages actions to build your smallweb app (see how this blog is built for an example).</p>
-<p>A list of applications to install can be found at <a href="https://apps.smallweb.run/">https://apps.smallweb.run</a> (the domain may change in the future). You can add your own app to this list by add a <code>smallweb-app</code> topic to your github repository.</p>
 <p>Once an app is installed, you can use the <code>git</code> cli to manage them. For example, you can run <code>git pull</code> to update the app to the latest version, or <code>git checkout &lt;hash&gt;</code> to rollback to a previous version. Take a look to the <a href="https://github.com/pomdtr/smallweb-puller">pomdtr/smallweb-puller repository</a> for a simple way to trigger an app update from the ouside.</p>
+<p>If you create a smallweb app, make sure to add the <code>smallweb-app</code> topic to your repository.</p>
 <h2 id="smallweb-init-now-support-custom-templates" tabindex="-1"><a href="http://localhost/posts/v0.12/#smallweb-init-now-support-custom-templates" class="header-anchor"><code>smallweb init</code> now support custom templates</a></h2>
-<p>The <code>smallweb init</code> was reworked to allow users to define custom templates from github. Just add a <code>smallweb-template</code> topic to your repository for it to appear in <a href="https://templates.smallweb.run/">https://templates.smallweb.run</a> (the domain may change in the future).</p>
+<p>The <code>smallweb init</code> was reworked to allow users to define custom templates from github. Smallweb templates are just github repositories with a <code>smallweb-template</code> topic.</p>
 <p>The new command usage is:</p>
 <pre><code class="language-ts">smallweb init [dir] [--template &lt;repo&gt;]
 </code></pre>
-<p>I dropped the interactive output for now, as I was not satisfied with the library I was using, and it was slowing down development. Instead, I rely on command completions to guide the user.</p>
-<pre><code class="language-sh">smallweb init --template &lt;tab&gt;
-</code></pre>
-<p>Make sure to setup them, as they are really useful to get the full smallweb experience.</p>
-<p>See <code>smallweb completions --help</code> for more information on how to setup them for your shell.</p>
+<p>When you run <code>smallweb init example --template pomdtr/smallweb-template-astro</code>, smallweb will download the content of the <code>pomdtr/smallweb-template-astro</code> repository in the <code>example</code> folder (withouth creating a <code>.git</code> folder).</p>
 <h2 id="crons-jobs-are-now-defined-as-http-requests" tabindex="-1"><a href="http://localhost/posts/v0.12/#crons-jobs-are-now-defined-as-http-requests" class="header-anchor">Crons jobs are now defined as HTTP requests</a></h2>
 <p>Crons uses to be defined as shell commands:</p>
 <pre><code class="language-json">{
@@ -73,9 +72,21 @@ smallweb open --dir ~/localhost/react
 # open the current directory
 smallweb open
 </code></pre>
-<h2 id="smallweb-rest-api" tabindex="-1"><a href="http://localhost/posts/v0.12/#smallweb-rest-api" class="header-anchor">Smallweb REST API</a></h2>
-<p>There is a new API to interact with the smallweb ecosystem, available at <a href="https://api.smallweb.run/">https://api.smallweb.run</a>. Currently it only supports listing apps, versions and templates.</p>
-<p>Feel free to use it in your own projects, and let me know if you think of more endpoints that could be useful.</p>
+<h2 id="deno-kv-is-now-scoped-to-the-hostname" tabindex="-1"><a href="http://localhost/posts/v0.12/#deno-kv-is-now-scoped-to-the-hostname" class="header-anchor">Deno KV is now scoped to the hostname</a></h2>
+<p>If you map multiple domains to the same app:</p>
+<pre><code class="language-ts">{
+    &quot;*-kv.smallweb.run&quot;: &quot;~/kv&quot; // maps both example-kv.smallweb.run and another-kv.smallweb.run to the same dir
+}
+</code></pre>
+<p>And uses the default KV instance:</p>
+<pre><code class="language-ts">// ~/kv/main.ts
+
+const kv = await Deno.openKv()
+</code></pre>
+<p><code>example-kv.smallweb.run</code> and <code>another-kv.smallweb.run</code> will not share the same KV instance. This behavior will allow some cool new usecases (ex: preview deployments with distinct KV instances).</p>
+<p>If you want to share a db between multiple hostnames, you can always specify a kv path in your code:</p>
+<pre><code class="language-ts">const kv = await Deno.openKv({ path: &quot;./kv.db&quot; })
+</code></pre>
 <h2 id="what's-next%3F" tabindex="-1"><a href="http://localhost/posts/v0.12/#what's-next%3F" class="header-anchor">What's next?</a></h2>
 <p>I really feel smallweb is in a good state right now, and I want to grow it's community. I just bought a new mike and as plan to record some videos to showcase smallweb features on Youtube and Twitter.</p>
 <p>Improved logs are still a priority. I want to move logs to their own file instead of using stderr/stdout, and allow you to filter them by app/time by storing them as JSON lines.</p>
