@@ -77,6 +77,56 @@
   <article class="post">
     <header class="post-header">
       <h2 class="post-title">
+        <a href="/posts/v0.12/">
+          Smallweb 0.12 - Publish and install flow for smallweb apps
+        </a>
+      </h2>
+
+      <div class="post-details">
+  
+    
+    
+      <p>by Achille Lacoin</p>
+    
+  
+
+  <p>
+    <time datetime="2024-07-23 00:00:00">
+      July 23rd, 2024
+    </time>
+  </p>
+
+  <p>3 min read</p>
+
+  <div class="post-tags">
+    
+      
+
+      
+        <a data-pagefind-filter="filter" class="badge" href="/archive/release/">release</a>
+      
+    
+  </div>
+</div>
+
+    </header>
+
+    <div class="post-excerpt body">
+      <p>Smallweb 0.12 is out! And it's the first release since 0.8 where I do not feel the need to fondamentally change the routing system 😅.</p>
+<p>But this is still a big release! And it even contains a few breaking changes (don't worry, they are easy to fix).</p>
+<h2><code>smallweb install</code>: A new convention to install and publish smallweb apps</h2>
+<p>Smallweb now includes a new <code>smallweb install</code> command to install smallweb apps from the web.</p>
+<p>Smallweb apps work on top of github repositories. When you run <code>smallweb install pomdtr/example-app ~/localhost/smallweb-app</code>, smallweb will clone the <code>pomdtr/example-app</code> repository in the <code>~/localhost/smallweb-app</code> folder.</p>
+    </div>
+
+    <a href="/posts/v0.12/" class="post-link">
+      Continue reading →
+    </a>
+  </article>
+
+  <article class="post">
+    <header class="post-header">
+      <h2 class="post-title">
         <a href="/posts/v0.11/">
           Smallweb 0.11 - Global config and new routing
         </a>
@@ -188,73 +238,6 @@ You can now defines them from the <code>smallweb.json[c]</code> file.</p>
     </div>
 
     <a href="/posts/v0.10/" class="post-link">
-      Continue reading →
-    </a>
-  </article>
-
-  <article class="post">
-    <header class="post-header">
-      <h2 class="post-title">
-        <a href="/posts/v0.9/">
-          Smallweb 0.9 - Improved Routing
-        </a>
-      </h2>
-
-      <div class="post-details">
-  
-    
-    
-      <p>by Achille Lacoin</p>
-    
-  
-
-  <p>
-    <time datetime="2024-07-12 00:00:00">
-      July 12th, 2024
-    </time>
-  </p>
-
-  <p>1 min read</p>
-
-  <div class="post-tags">
-    
-      
-
-      
-        <a data-pagefind-filter="filter" class="badge" href="/archive/release/">release</a>
-      
-    
-  </div>
-</div>
-
-    </header>
-
-    <div class="post-excerpt body">
-      <h2>Updated Routing</h2>
-<p>After a lot of feedback shared by community, the routing was rethinked from the
-ground up. Thanks everyone for sharing your thoughts!</p>
-<p>Here is what your smallweb root folder (which defaults to <code>~/smallweb</code>) should
-now look like:</p>
-<pre class="language-txt" tabindex="0"><code class="language-txt">~/smallweb/
-├── localhost
-│   ├── example
-│   │   └── main.ts
-│   └── react
-│       └── main.ts
-├── pomdtr.me
-│   └── www
-│       └── main.ts
-└── smallweb.run
-    ├── www
-    │   └── main.ts
-    ├── assets
-    │   └── main.ts
-    └── readme
-        └── main.ts
-</code></pre>
-    </div>
-
-    <a href="/posts/v0.9/" class="post-link">
       Continue reading →
     </a>
   </article>
