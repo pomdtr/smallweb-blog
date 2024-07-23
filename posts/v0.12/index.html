@@ -155,7 +155,7 @@
 <p>smallweb will clone the <code>pomdtr/example-app</code> repository in the <code>~/localhost/smallweb-app</code> folder.</p>
 <!-- more -->
 <p>If the repository contains a <code>smallweb</code> branch, smallweb will checkout this branch. Otherwise, it will checkout the <code>main</code> branch.</p>
-<p>This convention is really similar to how github pages work, and you can even repurposes github pages actions to build your smallweb app (see how this blog is built for an example).</p>
+<p>This convention is really similar to how github pages work, and you can even repurposes github pages actions to build your smallweb app (see <a href="https://github.com/pomdtr/smallweb-blog/blob/main/.github/workflows/deploy.yml#L24">how this blog is built</a> for an example).</p>
 <p>Once an app is installed, you can use the <code>git</code> cli to manage them. For example, you can run <code>git pull</code> to update the app to the latest version, or <code>git checkout &lt;hash&gt;</code> to rollback to a previous version. Take a look to the <a href="https://github.com/pomdtr/smallweb-puller">pomdtr/smallweb-puller repository</a> for a simple way to trigger an app update from the ouside.</p>
 <p>If you create a smallweb app, make sure to add the <code>smallweb-app</code> topic to your repository.</p>
 <h2 id="smallweb-init-now-support-custom-templates" tabindex="-1"><a href="#smallweb-init-now-support-custom-templates" class="header-anchor"><code>smallweb init</code> now support custom templates</a></h2>
