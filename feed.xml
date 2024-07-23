@@ -5,7 +5,7 @@
     <link>http://localhost/</link>
     <atom:link href="http://localhost/feed.xml" rel="self" type="application/rss+xml"/>
     <description>The latest new from Smallweb</description>
-    <lastBuildDate>Tue, 23 Jul 2024 09:16:10 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jul 2024 09:24:31 GMT</lastBuildDate>
     <language>en</language>
     <generator>Lume v2.2.2</generator>
     <item>
@@ -73,9 +73,9 @@ smallweb open --dir ~/localhost/react
 smallweb open
 </code></pre>
 <h2 id="deno-kv-is-now-scoped-to-the-hostname" tabindex="-1"><a href="http://localhost/posts/v0.12/#deno-kv-is-now-scoped-to-the-hostname" class="header-anchor">Deno KV is now scoped to the hostname</a></h2>
-<p>If you map multiple domains to the same app:</p>
-<pre><code class="language-ts">{
-    &quot;*-kv.smallweb.run&quot;: &quot;~/kv&quot; // maps both example-kv.smallweb.run and another-kv.smallweb.run to the same dir
+<p>If you map multiple domains to the same dir:</p>
+<pre><code class="language-json">{
+    &quot;*-kv.smallweb.run&quot;: &quot;~/kv&quot;
 }
 </code></pre>
 <p>And uses the default KV instance:</p>

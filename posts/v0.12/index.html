@@ -161,7 +161,7 @@
 <h2 id="smallweb-init-now-support-custom-templates" tabindex="-1"><a href="#smallweb-init-now-support-custom-templates" class="header-anchor"><code>smallweb init</code> now support custom templates</a></h2>
 <p>The <code>smallweb init</code> was reworked to allow users to define custom templates from github. Smallweb templates are just github repositories with a <code>smallweb-template</code> topic.</p>
 <p>The new command usage is:</p>
-<pre class="language-ts" tabindex="0"><code class="language-ts">smallweb init [dir] [--template &lt;repo&gt;]
+<pre class="language-ts" tabindex="0"><code class="language-ts">smallweb init <span class="token punctuation">[</span>dir<span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token operator">--</span>template <span class="token operator">&lt;</span>repo<span class="token operator">&gt;</span><span class="token punctuation">]</span>
 </code></pre>
 <p>When you run <code>smallweb init example --template pomdtr/smallweb-template-astro</code>, smallweb will download the content of the <code>pomdtr/smallweb-template-astro</code> repository in the <code>example</code> folder (withouth creating a <code>.git</code> folder).</p>
 <h2 id="crons-jobs-are-now-defined-as-http-requests" tabindex="-1"><a href="#crons-jobs-are-now-defined-as-http-requests" class="header-anchor">Crons jobs are now defined as HTTP requests</a></h2>
@@ -205,19 +205,19 @@ smallweb <span class="token function">open</span> <span class="token parameter v
 smallweb <span class="token function">open</span>
 </code></pre>
 <h2 id="deno-kv-is-now-scoped-to-the-hostname" tabindex="-1"><a href="#deno-kv-is-now-scoped-to-the-hostname" class="header-anchor">Deno KV is now scoped to the hostname</a></h2>
-<p>If you map multiple domains to the same app:</p>
-<pre class="language-ts" tabindex="0"><code class="language-ts">{
-    "*-kv.smallweb.run": "~/kv" // maps both example-kv.smallweb.run and another-kv.smallweb.run to the same dir
-}
+<p>If you map multiple domains to the same dir:</p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"*-kv.smallweb.run"</span><span class="token operator">:</span> <span class="token string">"~/kv"</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p>And uses the default KV instance:</p>
-<pre class="language-ts" tabindex="0"><code class="language-ts">// ~/kv/main.ts
+<pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token comment">// ~/kv/main.ts</span>
 
-const kv = await Deno.openKv()
+<span class="token keyword">const</span> kv <span class="token operator">=</span> <span class="token keyword">await</span> Deno<span class="token punctuation">.</span><span class="token function">openKv</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
 <p><code>example-kv.smallweb.run</code> and <code>another-kv.smallweb.run</code> will not share the same KV instance. This behavior will allow some cool new usecases (ex: preview deployments with distinct KV instances).</p>
 <p>If you want to share a db between multiple hostnames, you can always specify a kv path in your code:</p>
-<pre class="language-ts" tabindex="0"><code class="language-ts">const kv = await Deno.openKv({ path: "./kv.db" })
+<pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token keyword">const</span> kv <span class="token operator">=</span> <span class="token keyword">await</span> Deno<span class="token punctuation">.</span><span class="token function">openKv</span><span class="token punctuation">(</span><span class="token punctuation">{</span> path<span class="token operator">:</span> <span class="token string">"./kv.db"</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 </code></pre>
 <h2 id="what's-next%3F" tabindex="-1"><a href="#what's-next%3F" class="header-anchor">What's next?</a></h2>
 <p>I really feel smallweb is in a good state right now, and I want to grow it's community. I just bought a new mike and as plan to record some videos to showcase smallweb features on Youtube and Twitter.</p>
