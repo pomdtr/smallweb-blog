@@ -6,7 +6,6 @@
 @import "css/page.css";
 @import "css/post-list.css";
 @import "css/post.css";
-@import "css/comments.css";
 
 /* Make the links black */
 :root {
@@ -20,7 +19,7 @@ main {
   max-width: min(100% - 15vw, 45em);
   margin: 0 auto;
 
-  & > :first-child {
+  &> :first-child {
     margin-top: 0;
   }
 }
