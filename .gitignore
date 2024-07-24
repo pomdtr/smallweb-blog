@@ -1,5 +1,3 @@
-posts/*.md
 src/uploads
-_site
+dist
 _bin
-deno.lock

@@ -6,6 +6,7 @@ import "npm:prismjs@1.29.0/components/prism-typescript.js";
 
 const site = lume({
   src: "./src",
+  dest: "./dist",
 });
 
 site.use(plugins());
