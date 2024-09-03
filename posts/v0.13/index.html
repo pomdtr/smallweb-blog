@@ -2,7 +2,7 @@
 <html lang="en"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smallweb 0.13 - Authentication, Webdav, and CLI entrypoints - Smallweb Blog</title>
+    <title>Smallweb 0.13 - Authentication, WebDAV, and CLI entrypoints - Smallweb Blog</title>
 
     <meta name="supported-color-schemes" content="light dark">
     <meta name="theme-color" content="hsl(220, 20%, 100%)" media="(prefers-color-scheme: light)">
@@ -17,7 +17,7 @@
   <meta property="og:type" content="website">
 <meta property="og:site_name" content="Smallweb Blog">
 <meta property="og:locale" content="en">
-<meta property="og:title" content="Smallweb 0.13 - Authentication, Webdav, and CLI entrypoints">
+<meta property="og:title" content="Smallweb 0.13 - Authentication, WebDAV, and CLI entrypoints">
 <meta property="og:description" content="The latest new from Smallweb">
 <meta property="og:url" content="http://localhost/posts/v0.13/">
 <meta property="og:image" content="http://localhost/img/lastlogin.png">
@@ -66,9 +66,9 @@
     </nav>
 
     <main class="body-post">
-      <article class="post" data-pagefind-body="" data-title="Smallweb 0.13 - Authentication, Webdav, and CLI entrypoints" data-pagefind-index-attrs="data-title">
+      <article class="post" data-pagefind-body="" data-title="Smallweb 0.13 - Authentication, WebDAV, and CLI entrypoints" data-pagefind-index-attrs="data-title">
   <header class="post-header">
-    <h1 class="post-title">Smallweb 0.13 - Authentication, Webdav, and CLI entrypoints</h1>
+    <h1 class="post-title">Smallweb 0.13 - Authentication, WebDAV, and CLI entrypoints</h1>
 
     <div class="post-details">
   
@@ -199,13 +199,13 @@
 <p>In the future, I want to add support an <code>email</code> based authentication mechanism, inspired by <a href="https://lastlogin.io/">https://lastlogin.io/</a>.</p>
 <p><img src="/img/lastlogin.png" alt="Lastlogin Screenshot"></p>
 <h2 id="built-in-admin-apps" tabindex="-1"><a href="#built-in-admin-apps" class="header-anchor">Built-in Admin Apps</a></h2>
-<p>This new authentication mechanism enabled me to distribute admin servcies as part of smallweb. In this release, there are two admin apps available:</p>
+<p>This new authentication mechanism enabled me to distribute admin services as part of smallweb. In this release, there are two admin apps available:</p>
 <ul>
-<li><code>webdav.&lt;your-domain&gt;</code>: A webdav server to manage your files</li>
+<li><code>webdav.&lt;your-domain&gt;</code>: A WebDAV server to manage your files</li>
 <li><code>cli.&lt;your-domain&gt;</code>: Allowing you to access the cli from your browser</li>
 </ul>
 <h3 id="webdav-service" tabindex="-1"><a href="#webdav-service" class="header-anchor">webdav service</a></h3>
-<p>I've been rediscovering the power of webdav recently, and I wanted to make it easy to pair it with smallweb. The built-in webdav servers allows you to manage/backup your smallweb folder using any webdav client.</p>
+<p>I've been rediscovering the power of WebDAV recently, and I wanted to make it easy to pair it with smallweb. The built-in webdav servers allows you to manage/backup your smallweb folder using any webdav client.</p>
 <p>It means that smallweb can now be integrated with:</p>
 <ul>
 <li>All major operating systems (Windows, MacOS, Linux)</li>
@@ -216,8 +216,8 @@
 <li>Use bearer token authentication</li>
 <li>Use basic authentication, and provide the token as the <strong>username</strong></li>
 </ul>
-<p>Currently the webdav server does not comes with any UI, as I was not able to find a webdav client both easily embeddable and good-looking. If you have any suggestion, feel free to reach out!</p>
-<p><img src="/img/webdav_demo.png" alt="Smallweb Webdav demo"></p>
+<p>Currently the WebDAV server does not comes with any UI, as I was not able to find a webdav client both easily embeddable and good-looking. If you have any suggestion, feel free to reach out!</p>
+<p><img src="/img/webdav_demo.png" alt="Smallweb WebDAV demo"></p>
 <h3 id="cli-service" tabindex="-1"><a href="#cli-service" class="header-anchor">cli service</a></h3>
 <p>You can now access the cli from your browser! This is a great way to manage your smallweb instance from your phone or tablet.</p>
 <p>The cli is protected behind the same authentication mechanism as the rest of the apps.</p>
@@ -247,7 +247,7 @@
 
 <span class="token keyword">const</span> apps <span class="token operator">=</span> <span class="token keyword">await</span> resp<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
-<p>Or build your own smallweb editor using a <a href="https://www.npmjs.com/package/webdav">webdav client</a>!</p>
+<p>Or build your own smallweb editor using a <a href="https://www.npmjs.com/package/webdav">WebDAV client</a>!</p>
 <h2 id="cli-entrypoints" tabindex="-1"><a href="#cli-entrypoints" class="header-anchor">CLI entrypoints</a></h2>
 <p>Smallweb apps are required to export an object, as their default export, that contain's a <code>fetch</code> method to handle incoming requests.</p>
 <pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token comment">// ~/smallweb/example-app/main.ts</span>
@@ -326,7 +326,7 @@ Hello, pomdtr!
     <span class="token property">"crons"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p>We already detailled above:</p>
+<p>We already detailed above:</p>
 <ul>
 <li>The addition of the <code>private</code> field</li>
 <li>The removal of the <code>permissions</code> field</li>
