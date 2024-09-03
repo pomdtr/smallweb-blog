@@ -2,7 +2,7 @@
 <html lang="en"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smallweb 0.13 - Authentication, WebDAV, and CLI entrypoints - Smallweb Blog</title>
+    <title>Smallweb 0.13 - Private Apps, Terminal, WebDAV, and CLI entrypoints - Smallweb Blog</title>
 
     <meta name="supported-color-schemes" content="light dark">
     <meta name="theme-color" content="hsl(220, 20%, 100%)" media="(prefers-color-scheme: light)">
@@ -17,10 +17,10 @@
   <meta property="og:type" content="website">
 <meta property="og:site_name" content="Smallweb Blog">
 <meta property="og:locale" content="en">
-<meta property="og:title" content="Smallweb 0.13 - Authentication, WebDAV, and CLI entrypoints">
+<meta property="og:title" content="Smallweb 0.13 - Private Apps, Terminal, WebDAV, and CLI entrypoi…">
 <meta property="og:description" content="The latest new from Smallweb">
 <meta property="og:url" content="http://localhost/posts/v0.13/">
-<meta property="og:image" content="http://localhost/img/lastlogin.png">
+<meta property="og:image" content="http://localhost/img/webdav_demo.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@pomdtrr">
 <meta name="description" content="The latest new from Smallweb">
@@ -66,9 +66,9 @@
     </nav>
 
     <main class="body-post">
-      <article class="post" data-pagefind-body="" data-title="Smallweb 0.13 - Authentication, WebDAV, and CLI entrypoints" data-pagefind-index-attrs="data-title">
+      <article class="post" data-pagefind-body="" data-title="Smallweb 0.13 - Private Apps, Terminal, WebDAV, and CLI entrypoints" data-pagefind-index-attrs="data-title">
   <header class="post-header">
-    <h1 class="post-title">Smallweb 0.13 - Authentication, WebDAV, and CLI entrypoints</h1>
+    <h1 class="post-title">Smallweb 0.13 - Private Apps, Terminal, WebDAV, and CLI entrypoints</h1>
 
     <div class="post-details">
   
@@ -105,7 +105,7 @@
     <ol>
       
       <li>
-        <a href="#authentication">Authentication</a>
+        <a href="#private-apps">Private Apps</a>
 
         
       </li>
@@ -117,14 +117,20 @@
         <ul>
           
           <li>
-            <a href="#webdav-service">webdav service</a>
-          </li>
-          
-          <li>
             <a href="#cli-service">cli service</a>
           </li>
           
+          <li>
+            <a href="#webdav-service">webdav service</a>
+          </li>
+          
         </ul>
+        
+      </li>
+      
+      <li>
+        <a href="#cli-entrypoints">CLI entrypoints</a>
+
         
       </li>
       
@@ -135,7 +141,7 @@
       </li>
       
       <li>
-        <a href="#cli-entrypoints">CLI entrypoints</a>
+        <a href="#smallweb-edit-command">smallweb edit command</a>
 
         
       </li>
@@ -166,16 +172,18 @@
     <p>Hey, It's been a while since the last release of smallweb! I've been taking a break for the month of August, but I'm back with the biggest smallweb release yet, including:</p>
 <ul>
 <li>Protecting private apps with authentication</li>
-<li>Built-in admin services</li>
+<li>Built-in terminal and WebDAV services</li>
 <li>CLI entrypoints</li>
 </ul>
 <!-- more -->
-<h2 id="authentication" tabindex="-1"><a href="#authentication" class="header-anchor">Authentication</a></h2>
+<h2 id="private-apps" tabindex="-1"><a href="#private-apps" class="header-anchor">Private Apps</a></h2>
 <p>Smallweb now supports token based authentication for private apps. Enabling it is simple:</p>
 <ol>
 <li>
-<p>Add a token field to your global <code>config.json</code> file</p>
+<p>Add the some field to the global config (located at <code>~/.config/smallweb/config.json</code>)</p>
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"username"</span><span class="token operator">:</span> <span class="token string">"pomdtr"</span><span class="token punctuation">,</span>
+    <span class="token property">"password"</span><span class="token operator">:</span> <span class="token string">"smallweb-rocks"</span><span class="token punctuation">,</span>
     <span class="token property">"tokens"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
         <span class="token string">"my-secret-token"</span>
     <span class="token punctuation">]</span>
@@ -192,18 +200,29 @@
 </code></pre>
 </li>
 </ol>
-<p>From now on, you will need to provide a valid token whenever you want to access the app.</p>
-<p>If you access the app from the browser, you'll see a login prompt. If you access it programmatically, you can provide the token in the <code>Authorization</code> header.</p>
+<p>From now on, you will need to authenticate when accessing the app.</p>
+<p>You have multiple ways to authenticate:</p>
+<ul>
+<li>provide your username and password in the login prompt</li>
+<li>provide a token as the username and leave the password empty</li>
+<li>provide a token in the <code>Authorization</code> header</li>
+</ul>
 <pre class="language-sh" tabindex="0"><code class="language-sh"><span class="token function">curl</span> https://example-app.localhost <span class="token parameter variable">--header</span> <span class="token string">"Authorization: Bearer my-secret-token"</span>
 </code></pre>
-<p>In the future, I want to add support an <code>email</code> based authentication mechanism, inspired by <a href="https://lastlogin.io/">https://lastlogin.io/</a>.</p>
-<p><img src="/img/lastlogin.png" alt="Lastlogin Screenshot"></p>
+<p>This is just the beginning of built-in authentication mechanism in smallweb. Basic Auth is not ideal (especially on iOS), so I'm looking toward adding support for forward auth / SSO in the future (maybe through an <code>auth.&lt;your-domain&gt;</code> service).</p>
 <h2 id="built-in-admin-apps" tabindex="-1"><a href="#built-in-admin-apps" class="header-anchor">Built-in Admin Apps</a></h2>
 <p>This new authentication mechanism enabled me to distribute admin services as part of smallweb. In this release, there are two admin apps available:</p>
 <ul>
 <li><code>webdav.&lt;your-domain&gt;</code>: A WebDAV server to manage your files</li>
 <li><code>cli.&lt;your-domain&gt;</code>: Allowing you to access the cli from your browser</li>
 </ul>
+<p>But i'm considering adding more in the future (feel free to suggest some!).</p>
+<h3 id="cli-service" tabindex="-1"><a href="#cli-service" class="header-anchor">cli service</a></h3>
+<p>You can now access the cli from your browser! This is a great way to manage your smallweb instance from your phone or tablet.</p>
+<p>If you go to <code>cli.&lt;your-domain&gt;</code>, you will be prompted to authenticate, then be able to run any command you want.</p>
+<p>The cli is protected behind the same authentication mechanism as the rest of the apps.</p>
+<p><code>smallweb ls --json</code> -&gt; <code>curl -X POST 'https://cli.&lt;your-domain&gt;/ls?json' --header "Authorization: Bearer my-secret-token"</code></p>
+<p>In a future release, the cli service might include a terminal emulator using xterm.js.</p>
 <h3 id="webdav-service" tabindex="-1"><a href="#webdav-service" class="header-anchor">webdav service</a></h3>
 <p>I've been rediscovering the power of WebDAV recently, and I wanted to make it easy to pair it with smallweb. The built-in webdav servers allows you to manage/backup your smallweb folder using any webdav client.</p>
 <p>It means that smallweb can now be integrated with:</p>
@@ -217,37 +236,8 @@
 <li>Use basic authentication, and provide the token as the <strong>username</strong></li>
 </ul>
 <p>Currently the WebDAV server does not comes with any UI, as I was not able to find a webdav client both easily embeddable and good-looking. If you have any suggestion, feel free to reach out!</p>
+<p>Having a webdav server also allows you to easily backup your smallweb apps using a tool like <a href="https://rclone.org/"><code>rclone</code></a>.</p>
 <p><img src="/img/webdav_demo.png" alt="Smallweb WebDAV demo"></p>
-<h3 id="cli-service" tabindex="-1"><a href="#cli-service" class="header-anchor">cli service</a></h3>
-<p>You can now access the cli from your browser! This is a great way to manage your smallweb instance from your phone or tablet.</p>
-<p>The cli is protected behind the same authentication mechanism as the rest of the apps.</p>
-<p>You pass args to the cli by using path parameters. You can also use query parameters to pass options. For example, to run the <code>smallweb ls --json</code> command, you can go to <code>https://cli.&lt;your-domain&gt;/ls?json</code>. Or you can preview the logs as they come in by going to <code>https://cli.&lt;your-domain&gt;/logs?f</code>.</p>
-<p>Currently, the cli just output plain text, but in a future release, I might add support for richer outputs using xterm.js.</p>
-<p><img src="/img/cli_demo.png" alt="Smallweb CLI demo"></p>
-<h2 id="updated-permissions" tabindex="-1"><a href="#updated-permissions" class="header-anchor">Updated permissions</a></h2>
-<p>You used to be able to customize the permissions of a smallweb app using the <code>permissions</code> field in the app config. There was a big issue with this approach: if an app had write access to the filesystem, it could edit it's own permissions, and escalate its privileges.</p>
-<p>In this release, app permissions are now longer customizable. Instead, each smallweb app is allowed to:</p>
-<ul>
-<li>read and write in its own directory</li>
-<li>access the network using the fetch API</li>
-<li>access the env variable defined either in the global config or in the <code>.env</code> file</li>
-</ul>
-<p>If you want to give you app additional permission, you can provide it with a token has an environment variable.</p>
-<pre class="language-sh" tabindex="0"><code class="language-sh"><span class="token comment"># ~/smallweb/example-app.env</span>
-<span class="token assign-left variable">SMALLWEB_TOKEN</span><span class="token operator">=</span>my-secret-token
-</code></pre>
-<p>Then, you'll be able to access the cli from your app:</p>
-<pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token keyword">const</span> token <span class="token operator">=</span> Deno<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"SMALLWEB_TOKEN"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token keyword">const</span> resp <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">"https://cli.&lt;your-domain&gt;/ls?json"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-    headers<span class="token operator">:</span> <span class="token punctuation">{</span>
-        Authorization<span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Bearer </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>token<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token keyword">const</span> apps <span class="token operator">=</span> <span class="token keyword">await</span> resp<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<p>Or build your own smallweb editor using a <a href="https://www.npmjs.com/package/webdav">WebDAV client</a>!</p>
 <h2 id="cli-entrypoints" tabindex="-1"><a href="#cli-entrypoints" class="header-anchor">CLI entrypoints</a></h2>
 <p>Smallweb apps are required to export an object, as their default export, that contain's a <code>fetch</code> method to handle incoming requests.</p>
 <pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token comment">// ~/smallweb/example-app/main.ts</span>
@@ -272,6 +262,9 @@
 <pre class="language-console" tabindex="0"><code class="language-console">$ smallweb run example-app pomdtr
 Hello, pomdtr!
 </code></pre>
+<p>You can also access the cli from the <code>cli.&lt;your-domain&gt;</code> service, either from your browser or using curl.</p>
+<pre class="language-sh" tabindex="0"><code class="language-sh"><span class="token function">curl</span> <span class="token parameter variable">-X</span> POST https://cli.<span class="token operator">&lt;</span>your-domain<span class="token operator">&gt;</span>/run/example-app/pomdtr <span class="token parameter variable">-H</span> <span class="token string">"Authorization: Bearer my-secret-token"</span>
+</code></pre>
 <p>These cli entrypoints are also leveraged for cron tasks (which schema has been updated in this release).</p>
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token comment">// ~/smallweb/example-app/smallweb.json</span>
 <span class="token punctuation">{</span>
@@ -285,6 +278,34 @@ Hello, pomdtr!
     <span class="token punctuation">]</span>
 <span class="token punctuation">}</span>
 </code></pre>
+<h2 id="updated-permissions" tabindex="-1"><a href="#updated-permissions" class="header-anchor">Updated permissions</a></h2>
+<p>You used to be able to customize the permissions of a smallweb app using the <code>permissions</code> field in the app config. There was a big issue with this approach: if an app had write access to the filesystem, it could edit it's own permissions, and escalate its privileges.</p>
+<p>In this release, app permissions are now longer customizable. Instead, each smallweb app is allowed to:</p>
+<ul>
+<li>read and write in its own directory</li>
+<li>access the network using the fetch API</li>
+<li>access the env variable defined either in the global config or in the <code>.env</code> file</li>
+</ul>
+<p>If you want to give you app additional permission, you can provide it with a token has an environment variable.</p>
+<pre class="language-sh" tabindex="0"><code class="language-sh"><span class="token comment"># ~/smallweb/example-app.env</span>
+<span class="token assign-left variable">SMALLWEB_TOKEN</span><span class="token operator">=</span>my-secret-token
+</code></pre>
+<p>Then, you'll be able to access the cli from your app:</p>
+<pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token keyword">const</span> token <span class="token operator">=</span> Deno<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"SMALLWEB_TOKEN"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> resp <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">"https://cli.&lt;your-domain&gt;/ls?json"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    headers<span class="token operator">:</span> <span class="token punctuation">{</span>
+        method<span class="token operator">:</span> <span class="token string">"POST"</span><span class="token punctuation">,</span>
+        Authorization<span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Bearer </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>token<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> apps <span class="token operator">=</span> <span class="token keyword">await</span> resp<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Or build your own smallweb editor using a <a href="https://www.npmjs.com/package/webdav">WebDAV client</a>!</p>
+<h2 id="smallweb-edit-command" tabindex="-1"><a href="#smallweb-edit-command" class="header-anchor"><code>smallweb edit</code> command</a></h2>
+<p>Use the <code>smallweb edit [app]</code> command to open an app in your default editor.</p>
+<p>Of course, it integrates with the <code>cli.&lt;your-domain&gt;</code> service, allowing you to edit your apps from your browser.</p>
 <h2 id="smallweb-types-command" tabindex="-1"><a href="#smallweb-types-command" class="header-anchor"><code>smallweb types</code> command</a></h2>
 <p>With the addition of the <code>run</code> method, it can become a bit cumbersome to check that your default export is compatible with the expected smallweb schema.</p>
 <p>I added a new <code>smallweb types</code> command to help you generate types hint.</p>
