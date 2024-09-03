@@ -20,7 +20,8 @@
 <meta property="og:title" content="Smallweb 0.13 - Authentication, Webdav, and CLI entrypoints">
 <meta property="og:description" content="The latest new from Smallweb">
 <meta property="og:url" content="http://localhost/posts/v0.13/">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="http://localhost/img/lastlogin.png">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@pomdtrr">
 <meta name="description" content="The latest new from Smallweb">
 </head>
@@ -116,11 +117,11 @@
         <ul>
           
           <li>
-            <a href="#webdav.%3Cyour-domain%3E">webdav.<your-domain></your-domain></a>
+            <a href="#webdav-service">webdav service</a>
           </li>
           
           <li>
-            <a href="#cli.%3Cyour-domain%3E">cli.<your-domain></your-domain></a>
+            <a href="#cli-service">cli service</a>
           </li>
           
         </ul>
@@ -196,13 +197,14 @@
 <pre class="language-sh" tabindex="0"><code class="language-sh"><span class="token function">curl</span> https://example-app.localhost <span class="token parameter variable">--header</span> <span class="token string">"Authorization: Bearer my-secret-token"</span>
 </code></pre>
 <p>In the future, I want to add support an <code>email</code> based authentication mechanism, inspired by <a href="https://lastlogin.io/">https://lastlogin.io/</a>.</p>
+<p><img src="/img/lastlogin.png" alt="Lastlogin Screenshot"></p>
 <h2 id="built-in-admin-apps" tabindex="-1"><a href="#built-in-admin-apps" class="header-anchor">Built-in Admin Apps</a></h2>
 <p>This new authentication mechanism enabled me to distribute admin servcies as part of smallweb. In this release, there are two admin apps available:</p>
 <ul>
 <li><code>webdav.&lt;your-domain&gt;</code>: A webdav server to manage your files</li>
 <li><code>cli.&lt;your-domain&gt;</code>: Allowing you to access the cli from your browser</li>
 </ul>
-<h3 id="webdav.%3Cyour-domain%3E" tabindex="-1"><a href="#webdav.%3Cyour-domain%3E" class="header-anchor"><code>webdav.&lt;your-domain&gt;</code></a></h3>
+<h3 id="webdav-service" tabindex="-1"><a href="#webdav-service" class="header-anchor">webdav service</a></h3>
 <p>I've been rediscovering the power of webdav recently, and I wanted to make it easy to pair it with smallweb. The built-in webdav servers allows you to manage/backup your smallweb folder using any webdav client.</p>
 <p>It means that smallweb can now be integrated with:</p>
 <ul>
@@ -215,11 +217,13 @@
 <li>Use basic authentication, and provide the token as the <strong>username</strong></li>
 </ul>
 <p>Currently the webdav server does not comes with any UI, as I was not able to find a webdav client both easily embeddable and good-looking. If you have any suggestion, feel free to reach out!</p>
-<h3 id="cli.%3Cyour-domain%3E" tabindex="-1"><a href="#cli.%3Cyour-domain%3E" class="header-anchor"><code>cli.&lt;your-domain&gt;</code></a></h3>
+<p><img src="/img/webdav_demo.png" alt="Smallweb Webdav demo"></p>
+<h3 id="cli-service" tabindex="-1"><a href="#cli-service" class="header-anchor">cli service</a></h3>
 <p>You can now access the cli from your browser! This is a great way to manage your smallweb instance from your phone or tablet.</p>
 <p>The cli is protected behind the same authentication mechanism as the rest of the apps.</p>
 <p>You pass args to the cli by using path parameters. You can also use query parameters to pass options. For example, to run the <code>smallweb ls --json</code> command, you can go to <code>https://cli.&lt;your-domain&gt;/ls?json</code>. Or you can preview the logs as they come in by going to <code>https://cli.&lt;your-domain&gt;/logs?f</code>.</p>
 <p>Currently, the cli just output plain text, but in a future release, I might add support for richer outputs using xterm.js.</p>
+<p><img src="/img/cli_demo.png" alt="Smallweb CLI demo"></p>
 <h2 id="updated-permissions" tabindex="-1"><a href="#updated-permissions" class="header-anchor">Updated permissions</a></h2>
 <p>You used to be able to customize the permissions of a smallweb app using the <code>permissions</code> field in the app config. There was a big issue with this approach: if an app had write access to the filesystem, it could edit it's own permissions, and escalate its privileges.</p>
 <p>In this release, app permissions are now longer customizable. Instead, each smallweb app is allowed to:</p>
