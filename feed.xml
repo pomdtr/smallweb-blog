@@ -5,7 +5,7 @@
     <link>http://localhost/</link>
     <atom:link href="http://localhost/feed.xml" rel="self" type="application/rss+xml"/>
     <description>The latest new from Smallweb</description>
-    <lastBuildDate>Tue, 03 Sep 2024 08:55:27 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 03 Sep 2024 09:40:43 GMT</lastBuildDate>
     <language>en</language>
     <generator>Lume v2.2.2</generator>
     <item>
@@ -166,8 +166,9 @@ Hello, pomdtr!
 </code></pre>
 <p>All of these fields can also be provided using environment variables (ex: <code>host</code> can be provided using the <code>SMALLWEB_HOST</code> environment variable).</p>
 <p>As you can see, the complex domain rooting from previous versions has been dropped. A smallweb instance maps a single wildcard domain to a single directory. If you want to manage multiple domains, feel free to run multiple instances of smallweb!</p>
-<p>You can still attach a custom domain to a specific app by adding a <code>CNAME</code> file in the app directory, containing the domain you want to attach.</p>
-<h2 id="update-app-config" tabindex="-1"><a href="http://localhost/posts/v0.13/#update-app-config" class="header-anchor">Update app config</a></h2>
+<p>ex: I host two instances of smallweb on my hetzner VM (<code>smallweb.run</code> and <code>pomdtr.me</code>). To do so, I created two users (<code>smallweb.run</code> and <code>pomdtr.me</code>), and run smallweb as a service for each of them.</p>
+<p>Of course, you can still attach a custom domain to a specific app by adding a <code>CNAME</code> file in the app directory, containing the domain you want to attach.</p>
+<h2 id="updated-app-config" tabindex="-1"><a href="http://localhost/posts/v0.13/#updated-app-config" class="header-anchor">Updated app config</a></h2>
 <p>The schema of the smallweb config was updated:</p>
 <pre><code class="language-json">{
     &quot;private&quot;: true,
@@ -196,6 +197,12 @@ export default {
     // The root directory of the app
     fsRoot: &quot;./static&quot;,
   }),
+}
+</code></pre>
+<p>Or even simpler, add the following <code>smallweb.json</code> file:</p>
+<pre><code class="language-json">{
+    &quot;entrypoint&quot;: &quot;jsr:@smallweb/file-server&quot;,
+    &quot;root&quot;: &quot;static&quot; // or omit it to serve the whole app directory
 }
 </code></pre>
 ]]>

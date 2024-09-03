@@ -153,7 +153,7 @@
       </li>
       
       <li>
-        <a href="#update-app-config">Update app config</a>
+        <a href="#updated-app-config">Updated app config</a>
 
         
       </li>
@@ -316,8 +316,9 @@ Hello, pomdtr!
 </code></pre>
 <p>All of these fields can also be provided using environment variables (ex: <code>host</code> can be provided using the <code>SMALLWEB_HOST</code> environment variable).</p>
 <p>As you can see, the complex domain rooting from previous versions has been dropped. A smallweb instance maps a single wildcard domain to a single directory. If you want to manage multiple domains, feel free to run multiple instances of smallweb!</p>
-<p>You can still attach a custom domain to a specific app by adding a <code>CNAME</code> file in the app directory, containing the domain you want to attach.</p>
-<h2 id="update-app-config" tabindex="-1"><a href="#update-app-config" class="header-anchor">Update app config</a></h2>
+<p>ex: I host two instances of smallweb on my hetzner VM (<code>smallweb.run</code> and <code>pomdtr.me</code>). To do so, I created two users (<code>smallweb.run</code> and <code>pomdtr.me</code>), and run smallweb as a service for each of them.</p>
+<p>Of course, you can still attach a custom domain to a specific app by adding a <code>CNAME</code> file in the app directory, containing the domain you want to attach.</p>
+<h2 id="updated-app-config" tabindex="-1"><a href="#updated-app-config" class="header-anchor">Updated app config</a></h2>
 <p>The schema of the smallweb config was updated:</p>
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
     <span class="token property">"private"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
@@ -346,6 +347,12 @@ Hello, pomdtr!
     <span class="token comment">// The root directory of the app</span>
     fsRoot<span class="token operator">:</span> <span class="token string">"./static"</span><span class="token punctuation">,</span>
   <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Or even simpler, add the following <code>smallweb.json</code> file:</p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"entrypoint"</span><span class="token operator">:</span> <span class="token string">"jsr:@smallweb/file-server"</span><span class="token punctuation">,</span>
+    <span class="token property">"root"</span><span class="token operator">:</span> <span class="token string">"static"</span> <span class="token comment">// or omit it to serve the whole app directory</span>
 <span class="token punctuation">}</span>
 </code></pre>
 
