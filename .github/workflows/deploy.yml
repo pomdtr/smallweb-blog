@@ -29,9 +29,3 @@ jobs:
           publish_branch: smallweb
           publish_dir: ./dist
 
-      # https://github.com/pomdtr/smallweb-puller
-      - name: Trigger Smallweb Puller
-        if: github.ref == 'refs/heads/main'
-        run: |
-          curl https://puller.smallweb.run -H "Content-Type: application/json" -d '{ "app": "blog.smallweb.run" }'
-
