@@ -5,7 +5,7 @@
     <link>http://localhost/</link>
     <atom:link href="http://localhost/feed.xml" rel="self" type="application/rss+xml"/>
     <description>The latest new from Smallweb</description>
-    <lastBuildDate>Wed, 04 Sep 2024 17:01:38 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 04 Sep 2024 17:16:56 GMT</lastBuildDate>
     <language>en</language>
     <generator>Lume v2.2.2</generator>
     <item>
@@ -174,11 +174,9 @@ const apps = await resp.json();
 {
     &quot;host&quot;: &quot;127.0.0.1&quot;,
     &quot;port&quot;: 8080,
+    &quot;email&quot;: &quot;pomdtr@gmail.com&quot;,
     &quot;domain&quot;: &quot;smallweb.run&quot;,
-    &quot;dir&quot;: &quot;~/smallweb&quot;,
-    &quot;tokens&quot;: [
-        &quot;my-secret-token&quot;
-    ],
+    &quot;dir&quot;: &quot;~/smallweb&quot;
 }
 </code></pre>
 <p>All of these fields can also be provided using environment variables (ex: <code>host</code> can be provided using the <code>SMALLWEB_HOST</code> environment variable).</p>
