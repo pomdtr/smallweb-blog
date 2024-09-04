@@ -20,7 +20,7 @@
 <meta property="og:title" content="Smallweb 0.13 - Private Apps, Terminal, WebDAV, and CLI entrypoi…">
 <meta property="og:description" content="The latest new from Smallweb">
 <meta property="og:url" content="http://localhost/posts/v0.13/">
-<meta property="og:image" content="http://localhost/img/webdav_demo.png">
+<meta property="og:image" content="http://localhost/img/lastlogin.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@pomdtrr">
 <meta name="description" content="The latest new from Smallweb">
@@ -84,7 +84,7 @@
     </time>
   </p>
 
-  <p>5 min read</p>
+  <p>6 min read</p>
 
   <div class="post-tags">
     
@@ -182,11 +182,7 @@
 <li>
 <p>Add the some field to the global config (located at <code>~/.config/smallweb/config.json</code>)</p>
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
-    <span class="token property">"username"</span><span class="token operator">:</span> <span class="token string">"pomdtr"</span><span class="token punctuation">,</span>
-    <span class="token property">"password"</span><span class="token operator">:</span> <span class="token string">"smallweb-rocks"</span><span class="token punctuation">,</span>
-    <span class="token property">"tokens"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-        <span class="token string">"my-secret-token"</span>
-    <span class="token punctuation">]</span>
+    <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"pomdtr@smallweb.dev"</span>
 <span class="token punctuation">}</span>
 </code></pre>
 <p>You can easily generate a new token with the <code>smallweb token</code> command.</p>
@@ -201,15 +197,18 @@
 </li>
 </ol>
 <p>From now on, you will need to authenticate when accessing the app.</p>
-<p>You have multiple ways to authenticate:</p>
-<ul>
-<li>provide your username and password in the login prompt</li>
-<li>provide a token as the username and leave the password empty</li>
-<li>provide a token in the <code>Authorization</code> header</li>
-</ul>
-<pre class="language-sh" tabindex="0"><code class="language-sh"><span class="token function">curl</span> https://example-app.localhost <span class="token parameter variable">--header</span> <span class="token string">"Authorization: Bearer my-secret-token"</span>
+<p><img src="/img/lastlogin.png" alt="alt text"></p>
+<p>We leverage <a href="https://lastlogin.io">lastlogin.io</a> to provide a simple and secure authentication mechanism. I might host my own instance of lastlogin in the future, but for now, I'm choosed to rely on the public instance.</p>
+<p>Alternatively, you can provide a token in the <code>Authorization</code> header.</p>
+<pre class="language-sh" tabindex="0"><code class="language-sh"><span class="token function">curl</span> https://example-app.localhost <span class="token parameter variable">--header</span> <span class="token string">"Authorization: Bearer &lt;token&gt;"</span>
 </code></pre>
-<p>This is just the beginning of built-in authentication mechanism in smallweb. Basic Auth is not ideal (especially on iOS), so I'm looking toward adding support for forward auth / SSO in the future (maybe through an <code>auth.&lt;your-domain&gt;</code> service).</p>
+<p>Or alternatively:</p>
+<pre class="language-sh" tabindex="0"><code class="language-sh"><span class="token function">curl</span> https://<span class="token operator">&lt;</span>token<span class="token operator">&gt;</span>@example-app.localhost
+</code></pre>
+<p>To get a smallweb token, you can use the <code>smallweb token create</code> command.</p>
+<pre class="language-sh" tabindex="0"><code class="language-sh">$ smallweb token create <span class="token parameter variable">--description</span> <span class="token string">"My secret token"</span>
+Pj0e8hlwTolo7IoPo6ksA
+</code></pre>
 <h2 id="built-in-admin-apps" tabindex="-1"><a href="#built-in-admin-apps" class="header-anchor">Built-in Admin Apps</a></h2>
 <p>This new authentication mechanism enabled me to distribute admin services as part of smallweb. In this release, there are two admin apps available:</p>
 <ul>
@@ -218,7 +217,7 @@
 </ul>
 <p>But i'm considering adding more in the future (feel free to suggest some!).</p>
 <h3 id="cli-service" tabindex="-1"><a href="#cli-service" class="header-anchor">cli service</a></h3>
-<p>You can now access the cli from your browser! This is a great way to manage your smallweb instance from your phone or tablet.</p>
+<p>You can now access the cli from your browser! This is a great way to manage a remote smallweb instance without having to ssh into it.</p>
 <p>If you go to <code>cli.&lt;your-domain&gt;</code>, you will be prompted to authenticate, then be able to run any command you want.</p>
 <p>The cli is protected behind the same authentication mechanism as the rest of the apps.</p>
 <p><code>smallweb ls --json</code> -&gt; <code>curl -X POST 'https://cli.&lt;your-domain&gt;/ls?json' --header "Authorization: Bearer my-secret-token"</code></p>
@@ -262,7 +261,8 @@
 <pre class="language-console" tabindex="0"><code class="language-console">$ smallweb run example-app pomdtr
 Hello, pomdtr!
 </code></pre>
-<p>You can also access the cli from the <code>cli.&lt;your-domain&gt;</code> service, either from your browser or using curl.</p>
+<p>Smallweb commands run with the same permissions as the app itself. You can access stdin/stdout/stderr, not spawn subprocesses.</p>
+<p>You can also access the newly created cli from the internal <code>cli.&lt;your-domain&gt;</code> service, either from your browser or using curl.</p>
 <pre class="language-sh" tabindex="0"><code class="language-sh"><span class="token function">curl</span> <span class="token parameter variable">-X</span> POST https://cli.<span class="token operator">&lt;</span>your-domain<span class="token operator">&gt;</span>/run/example-app/pomdtr <span class="token parameter variable">-H</span> <span class="token string">"Authorization: Bearer my-secret-token"</span>
 </code></pre>
 <p>These cli entrypoints are also leveraged for cron tasks (which schema has been updated in this release).</p>
@@ -280,13 +280,14 @@ Hello, pomdtr!
 </code></pre>
 <h2 id="updated-permissions" tabindex="-1"><a href="#updated-permissions" class="header-anchor">Updated permissions</a></h2>
 <p>You used to be able to customize the permissions of a smallweb app using the <code>permissions</code> field in the app config. There was a big issue with this approach: if an app had write access to the filesystem, it could edit it's own permissions, and escalate its privileges.</p>
+<p>Since I envision smallweb as a platform where user can run remote or AI generated code, I wanted to make sure that the permissions of an app are as restricted as possible.</p>
 <p>In this release, app permissions are now longer customizable. Instead, each smallweb app is allowed to:</p>
 <ul>
 <li>read and write in its own directory</li>
 <li>access the network using the fetch API</li>
 <li>access the env variable defined either in the global config or in the <code>.env</code> file</li>
 </ul>
-<p>If you want to give you app additional permission, you can provide it with a token has an environment variable.</p>
+<p>If you want to give you app additional permissions, you can provide it with a token has an environment variable.</p>
 <pre class="language-sh" tabindex="0"><code class="language-sh"><span class="token comment"># ~/smallweb/example-app.env</span>
 <span class="token assign-left variable">SMALLWEB_TOKEN</span><span class="token operator">=</span>my-secret-token
 </code></pre>

@@ -5,7 +5,7 @@
     <link>http://localhost/</link>
     <atom:link href="http://localhost/feed.xml" rel="self" type="application/rss+xml"/>
     <description>The latest new from Smallweb</description>
-    <lastBuildDate>Tue, 03 Sep 2024 20:29:44 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 04 Sep 2024 16:26:36 GMT</lastBuildDate>
     <language>en</language>
     <generator>Lume v2.2.2</generator>
     <item>
@@ -26,11 +26,7 @@
 <li>
 <p>Add the some field to the global config (located at <code>~/.config/smallweb/config.json</code>)</p>
 <pre><code class="language-json">{
-    &quot;username&quot;: &quot;pomdtr&quot;,
-    &quot;password&quot;: &quot;smallweb-rocks&quot;,
-    &quot;tokens&quot;: [
-        &quot;my-secret-token&quot;
-    ]
+    &quot;email&quot;: &quot;pomdtr@smallweb.dev&quot;
 }
 </code></pre>
 <p>You can easily generate a new token with the <code>smallweb token</code> command.</p>
@@ -45,15 +41,18 @@
 </li>
 </ol>
 <p>From now on, you will need to authenticate when accessing the app.</p>
-<p>You have multiple ways to authenticate:</p>
-<ul>
-<li>provide your username and password in the login prompt</li>
-<li>provide a token as the username and leave the password empty</li>
-<li>provide a token in the <code>Authorization</code> header</li>
-</ul>
-<pre><code class="language-sh">curl https://example-app.localhost --header &quot;Authorization: Bearer my-secret-token&quot;
+<p><img src="http://localhost/img/lastlogin.png" alt="alt text"></p>
+<p>We leverage <a href="https://lastlogin.io/">lastlogin.io</a> to provide a simple and secure authentication mechanism. I might host my own instance of lastlogin in the future, but for now, I'm choosed to rely on the public instance.</p>
+<p>Alternatively, you can provide a token in the <code>Authorization</code> header.</p>
+<pre><code class="language-sh">curl https://example-app.localhost --header &quot;Authorization: Bearer &lt;token&gt;&quot;
 </code></pre>
-<p>This is just the beginning of built-in authentication mechanism in smallweb. Basic Auth is not ideal (especially on iOS), so I'm looking toward adding support for forward auth / SSO in the future (maybe through an <code>auth.&lt;your-domain&gt;</code> service).</p>
+<p>Or alternatively:</p>
+<pre><code class="language-sh">curl https://&lt;token&gt;@example-app.localhost
+</code></pre>
+<p>To get a smallweb token, you can use the <code>smallweb token create</code> command.</p>
+<pre><code class="language-sh">$ smallweb token create --description &quot;My secret token&quot;
+Pj0e8hlwTolo7IoPo6ksA
+</code></pre>
 <h2 id="built-in-admin-apps" tabindex="-1"><a href="http://localhost/posts/v0.13/#built-in-admin-apps" class="header-anchor">Built-in Admin Apps</a></h2>
 <p>This new authentication mechanism enabled me to distribute admin services as part of smallweb. In this release, there are two admin apps available:</p>
 <ul>
@@ -62,7 +61,7 @@
 </ul>
 <p>But i'm considering adding more in the future (feel free to suggest some!).</p>
 <h3 id="cli-service" tabindex="-1"><a href="http://localhost/posts/v0.13/#cli-service" class="header-anchor">cli service</a></h3>
-<p>You can now access the cli from your browser! This is a great way to manage your smallweb instance from your phone or tablet.</p>
+<p>You can now access the cli from your browser! This is a great way to manage a remote smallweb instance without having to ssh into it.</p>
 <p>If you go to <code>cli.&lt;your-domain&gt;</code>, you will be prompted to authenticate, then be able to run any command you want.</p>
 <p>The cli is protected behind the same authentication mechanism as the rest of the apps.</p>
 <p><code>smallweb ls --json</code> -&gt; <code>curl -X POST 'https://cli.&lt;your-domain&gt;/ls?json' --header &quot;Authorization: Bearer my-secret-token&quot;</code></p>
@@ -106,7 +105,8 @@ export default {
 <pre><code class="language-console">$ smallweb run example-app pomdtr
 Hello, pomdtr!
 </code></pre>
-<p>You can also access the cli from the <code>cli.&lt;your-domain&gt;</code> service, either from your browser or using curl.</p>
+<p>Smallweb commands run with the same permissions as the app itself. You can access stdin/stdout/stderr, not spawn subprocesses.</p>
+<p>You can also access the newly created cli from the internal <code>cli.&lt;your-domain&gt;</code> service, either from your browser or using curl.</p>
 <pre><code class="language-sh">curl -X POST https://cli.&lt;your-domain&gt;/run/example-app/pomdtr -H &quot;Authorization: Bearer my-secret-token&quot;
 </code></pre>
 <p>These cli entrypoints are also leveraged for cron tasks (which schema has been updated in this release).</p>
@@ -124,13 +124,14 @@ Hello, pomdtr!
 </code></pre>
 <h2 id="updated-permissions" tabindex="-1"><a href="http://localhost/posts/v0.13/#updated-permissions" class="header-anchor">Updated permissions</a></h2>
 <p>You used to be able to customize the permissions of a smallweb app using the <code>permissions</code> field in the app config. There was a big issue with this approach: if an app had write access to the filesystem, it could edit it's own permissions, and escalate its privileges.</p>
+<p>Since I envision smallweb as a platform where user can run remote or AI generated code, I wanted to make sure that the permissions of an app are as restricted as possible.</p>
 <p>In this release, app permissions are now longer customizable. Instead, each smallweb app is allowed to:</p>
 <ul>
 <li>read and write in its own directory</li>
 <li>access the network using the fetch API</li>
 <li>access the env variable defined either in the global config or in the <code>.env</code> file</li>
 </ul>
-<p>If you want to give you app additional permission, you can provide it with a token has an environment variable.</p>
+<p>If you want to give you app additional permissions, you can provide it with a token has an environment variable.</p>
 <pre><code class="language-sh"># ~/smallweb/example-app.env
 SMALLWEB_TOKEN=my-secret-token
 </code></pre>
