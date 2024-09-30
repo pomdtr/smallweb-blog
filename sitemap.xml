@@ -2,27 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost/</loc>
-    <lastmod>2024-09-04T17:16:49.030Z</lastmod>
+    <lastmod>2024-09-30T18:05:33.381Z</lastmod>
   </url>
   <url>
     <loc>http://localhost/archive/</loc>
-    <lastmod>2024-09-04T17:16:49.018Z</lastmod>
+    <lastmod>2024-09-30T18:05:33.369Z</lastmod>
   </url>
   <url>
     <loc>http://localhost/archive/article/</loc>
-    <lastmod>2024-09-04T17:16:49.018Z</lastmod>
+    <lastmod>2024-09-30T18:05:33.369Z</lastmod>
   </url>
   <url>
     <loc>http://localhost/archive/release/</loc>
-    <lastmod>2024-09-04T17:16:49.018Z</lastmod>
+    <lastmod>2024-09-30T18:05:33.369Z</lastmod>
   </url>
   <url>
     <loc>http://localhost/author/achille-lacoin/</loc>
-    <lastmod>2024-09-04T17:16:49.018Z</lastmod>
+    <lastmod>2024-09-30T18:05:33.369Z</lastmod>
   </url>
   <url>
     <loc>http://localhost/contact/</loc>
-    <lastmod>2024-09-04T17:16:49.030Z</lastmod>
+    <lastmod>2024-09-30T18:05:33.381Z</lastmod>
   </url>
   <url>
     <loc>http://localhost/posts/routing-design/</loc>
@@ -43,6 +43,10 @@
   <url>
     <loc>http://localhost/posts/v0.13/</loc>
     <lastmod>2024-09-01T00:00:00.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost/posts/v0.14/</loc>
+    <lastmod>2024-10-01T00:00:00.000Z</lastmod>
   </url>
   <url>
     <loc>http://localhost/posts/v0.9/</loc>
