@@ -5,11 +5,11 @@
     <link>http://localhost/</link>
     <atom:link href="http://localhost/feed.xml" rel="self" type="application/rss+xml"/>
     <description>The latest new from Smallweb</description>
-    <lastBuildDate>Tue, 01 Oct 2024 14:15:34 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 01 Oct 2024 21:02:11 GMT</lastBuildDate>
     <language>en</language>
     <generator>Lume v2.2.2</generator>
     <item>
-      <title>Smallweb 0.14 - REST Api, Static Sites and more...</title>
+      <title>Smallweb 0.14 - REST API, Esbuild for static sites and more...</title>
       <link>http://localhost/posts/v0.14/</link>
       <guid isPermaLink="false">http://localhost/posts/v0.14/</guid>
       <content:encoded>
