@@ -117,6 +117,12 @@
       </li>
       
       <li>
+        <a href="#updated-handling-of-custom-domains">Updated handling of custom domains</a>
+
+        
+      </li>
+      
+      <li>
         <a href="#removal-of-the-smallweb-terminal">Removal of the smallweb terminal</a>
 
         
@@ -222,9 +228,40 @@ smallweb api <span class="token parameter variable">-X</span> GET /v0/apps
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>
 </code></pre>
-<p>If your static website includes a main.ts file, you can force the serving of static assets by creating a <code>smallweb.json</code>:</p>
+<p>Behind the scenes, it uses <a href="https://esbuild.github.io/">esbuild</a> to compile your files.</p>
+<p>You can control how your jsx file are tranpiled using a pragma comment:</p>
+<pre class="language-tsx" tabindex="0"><code class="language-tsx">/** @jsxImportSource https://esm.sh/react */
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+ReactDOM.render(
+    &lt;h1&gt;Hello, world!&lt;/h1&gt;,
+    document.getElementById('root')
+)
+</code></pre>
+<p>If your static website includes a main.ts file, you can still force the serving of static assets by creating a <code>smallweb.json</code>:</p>
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
     <span class="token property">"entrypoint"</span><span class="token operator">:</span> <span class="token string">"smallweb:static"</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="updated-handling-of-custom-domains" tabindex="-1"><a href="#updated-handling-of-custom-domains" class="header-anchor">Updated handling of custom domains</a></h2>
+<p>To add a custom domain in addition to the default one, you should use the new <code>customDomains</code> property in the global config.</p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token comment">// ~/.config/smallweb/config.json</span>
+<span class="token punctuation">{</span>
+    <span class="token property">"domain"</span><span class="token operator">:</span> <span class="token string">"smallweb.run"</span><span class="token punctuation">,</span>
+    <span class="token property">"customDomains"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token comment">// map example.com to the example app</span>
+        <span class="token property">"example.com"</span><span class="token operator">:</span> <span class="token string">"example"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Custom domains also support wildcards:</p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"domain"</span><span class="token operator">:</span> <span class="token string">"smallweb.run"</span><span class="token punctuation">,</span>
+    <span class="token property">"customDomains"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token comment">// map all subdomains of example.com to the example app</span>
+        <span class="token property">"*.example.com"</span><span class="token operator">:</span> <span class="token string">"example"</span>
+    <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code></pre>
 <h2 id="removal-of-the-smallweb-terminal" tabindex="-1"><a href="#removal-of-the-smallweb-terminal" class="header-anchor">Removal of the smallweb terminal</a></h2>
@@ -252,21 +289,39 @@ smallweb log console
 <h2 id="cli-changes" tabindex="-1"><a href="#cli-changes" class="header-anchor">CLI Changes</a></h2>
 <p>I added a few new commands to the smallweb cli to help you manage your apps.</p>
 <ul>
-<li><code>smallweb create &lt;app&gt;</code> to create a new app (replaces <code>smallweb init</code>)</li>
-<li><code>smallweb rename &lt;old&gt; &lt;new&gt;</code> to rename an app</li>
-<li><code>smallweb delete &lt;app&gt;</code> to delete an app</li>
-<li><code>smallweb fork &lt;source&gt; &lt;target&gt;</code> to duplicate an app</li>
+<li>A bunch of commands under <code>smallweb app</code>:
+<ul>
+<li><code>smallweb app create</code> to create a new app (replace <code>smallweb init</code>)</li>
+<li><code>smallweb app delete</code> to delete an app</li>
+<li><code>smallweb app list</code> to list all apps</li>
+<li><code>smallweb app rename</code> to rename an app</li>
+<li><code>smallweb app clone</code> to clone an app</li>
+<li><code>smallweb app open</code> to open an app in your browser (replace <code>smallweb open</code>)</li>
 </ul>
-<p>There is also a new <code>smallweb changelog</code> command to view the changelog of smallweb.</p>
+</li>
+<li><code>smallweb changelog</code> to view the changelog of smallweb</li>
+</ul>
 <p><code>smallweb edit</code> is now deprecated, but you can easily recreate it using a <a href="https://docs.smallweb.run/guides/plugins.html">smallweb plugin</a>.</p>
 <h2 id="what's-next-%3F" tabindex="-1"><a href="#what's-next-%3F" class="header-anchor">What's next ?</a></h2>
 <p>A bunch of things!</p>
-<p>Now that I have onboarded quite a few users, I've noticed that nearly everyone struggles with wiring their domain to a smallweb instance using cloudflare worker. I want to start working on an optional managed version of smallweb, which would make it easier to get familiar with the tool before doing a full self-hosted deployment.</p>
-<p>Smallweb pairs really well with <a href="https://mutagen.io/">mutagen</a>, and mutagen has some support for <a href="https://mutagen.io/documentation/introduction/daemon#embedding">beeing embedded</a>.</p>
-<p>Now that smallweb is more mature, I really want to expand the community of users. If you're aware of any communities that might be interested in smallweb, please let me know! I would love to do a demo for them.</p>
-<p>I have found a good way to distribute apps using smallweb on JSR (see <a href="https://jsr.io/@smallweb/excalidraw">@smallweb/excalidraw</a>), and I want to package a bunc of them this way.</p>
-<p>Now that we have a rest API, it's quite easy to connect smallweb to other tools. I have started working on a raycast integration, a telegram bot and a vscode extension, and I'll share them with you as soon as they are ready.</p>
-<p>I plan to create an adapter for <a href="https://astro.build/">astro</a>, which would allow you to use smallweb as a backend for your astro apps.</p>
+<p>Now that I have onboarded quite a few users, I've noticed that nearly everyone struggles with wiring their domain to a smallweb instance using cloudflare tunnel.</p>
+<p>I'm thinking of adding a new <code>smallweb tunnel</code> command to smallweb that will be an alternative to <code>smallweb up</code>. It will create a tunnel to your smallweb instance, and provide you with a wildcard at: <code>https://*.&lt;username&gt;.smallweb.run</code>.</p>
+<p>This will be completely optional, and you'll still be able to use cloudflare tunnel if you prefer.</p>
+<p>Other things I'm thinking of:</p>
+<ul>
+<li>create an astro adapter for smallweb</li>
+<li>start recording screencasts to help new users</li>
+<li>create new integrations now that we have a rest api
+<ul>
+<li>vscode extension</li>
+<li>raycast extension</li>
+<li>telegram bot to manage your apps from your mobile</li>
+</ul>
+</li>
+<li>build a library of smallweb apps. Suggestions are welcome!</li>
+</ul>
+<p>Also, I feel like smallweb is ready to be shared with a wider audience.
+If you know of any communities that might be interested in smallweb, please let me know! I'm open to talk in conferences, meetups, or any other format.</p>
 
   </div>
 
