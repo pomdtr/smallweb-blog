@@ -5,7 +5,7 @@
     <link>http://localhost/</link>
     <atom:link href="http://localhost/feed.xml" rel="self" type="application/rss+xml"/>
     <description>The latest new from Smallweb</description>
-    <lastBuildDate>Tue, 01 Oct 2024 11:13:53 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 01 Oct 2024 14:15:34 GMT</lastBuildDate>
     <language>en</language>
     <generator>Lume v2.2.2</generator>
     <item>
@@ -16,6 +16,12 @@
         <![CDATA[<p>Smallweb <code>0.14</code> is the first release approaching the vision I had for the project when I started it.</p>
 <p>It includes a lot of new features, but almost no breaking changes, which is a good sign that the project is maturing.</p>
 <!-- more -->
+<p>You can upgrade to the latest version using:</p>
+<pre><code class="language-sh">smallweb version upgrade 0.14.0
+</code></pre>
+<p>Or if you are new to smallweb, you can install it using:</p>
+<pre><code class="language-sh">curl -sSfL https://install.smallweb.run | sh
+</code></pre>
 <h2 id="admin-%2F-rest-api" tabindex="-1"><a href="http://localhost/posts/v0.14/#admin-%2F-rest-api" class="header-anchor">Admin / REST API</a></h2>
 <p>You can now manage your apps using a new REST API.</p>
 <p>You'll need to assign a subdomain to it:</p>
