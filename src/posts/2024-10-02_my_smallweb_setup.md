@@ -129,6 +129,12 @@ On the vps side, I have a single `.git` folder at the root of my smallweb folder
 
 ![smallweb.run backup](/img/smallweb-run-backup.png)
 
+One of the cool thing about this setup is that I can then reference files from a specific backup using the commit hash, and then import from a smallweb app using deno!
+
+```ts
+import { helper } from "https://raw.githubusercontent.com/pomdtr/smallweb.run/0adca1a6dfe866df49d6b11071781ffb5ea31b52/discord/main.ts";
+```
+
 ## Editing websites from phone/tablet
 
 In order to edit websites from my phone, I use the webdav server built-in to smallweb, associated with [Material Files](https://play.google.com/store/apps/details?id=me.zhanghai.android.files&hl=en_US).
