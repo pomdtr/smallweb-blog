@@ -5,7 +5,7 @@
     <link>http://localhost/</link>
     <atom:link href="http://localhost/feed.xml" rel="self" type="application/rss+xml"/>
     <description>The latest new from Smallweb</description>
-    <lastBuildDate>Tue, 01 Oct 2024 21:02:11 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 02 Oct 2024 09:37:06 GMT</lastBuildDate>
     <language>en</language>
     <generator>Lume v2.2.2</generator>
     <item>
@@ -184,6 +184,104 @@ smallweb log console
 </ul>
 <p>Also, I feel like smallweb is ready to be shared with a wider audience.
 If you know of any communities that might be interested in smallweb, please let me know! I'm open to talk in conferences, meetups, or any other format.</p>
+]]>
+      </content:encoded>
+      <pubDate>Tue, 01 Oct 2024 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>My Smallweb Setup</title>
+      <link>http://localhost/posts/my-smallweb-setup/</link>
+      <guid isPermaLink="false">http://localhost/posts/my-smallweb-setup/</guid>
+      <content:encoded>
+        <![CDATA[<p>Smallweb is still WIP, so I'm discovering new ways to use it every weeks. But in the past month, I've found a setup I'm satisfied with, so I'm sharing it here.</p>
+<p>This article is inspired by <a href="https://www.smallweb.ndyg.co/">nydg article</a> about his own setup using <a href="https://sidepro.cloud/">Sidepro</a>.</p>
+<p>I'll try to update this article each time I discover something new.</p>
+<!-- more -->
+<h2 id="hosting-smallweb" tabindex="-1"><a href="http://localhost/posts/my-smallweb-setup/#hosting-smallweb" class="header-anchor">Hosting smallweb</a></h2>
+<p>I host all of the websites under the <code>smallweb.run</code> domain on a 5$ Hetzner VPS. The setup script I used is quite simple:</p>
+<pre><code class="language-sh"># create user with homedir and default shell
+useradd --system --user-group --create-home --shell $(which bash) smallweb.run
+
+# set a password for the smallweb user
+passwd smallweb.run
+
+# give the user sudo access (optional)
+usermod -aG sudo smallweb.run
+
+# allow the user to use systemd
+usermod -aG systemd-journal smallweb.run
+
+# run user services on login
+loginctl enable-linger smallweb.run
+
+# install unzip (required for deno)
+sudo apt update &amp;&amp; sudo apt install unzip
+
+# install deno
+curl -fsSL https://deno.land/install.sh | sh # install deno
+
+# install smallweb
+curl -sSfL https://install.smallweb.run | sh # install smallweb
+
+# start the smallweb service
+smallweb service install
+</code></pre>
+<p>Each smallweb instance get it's own user. Currently, I have two of them: <code>smallweb.run</code> and <code>pomdtr.me</code>, and I can easily switch between them using ssh:</p>
+<pre><code class="language-sh"># connect to the smallweb.run user
+ssh smallweb.run@&lt;vps-ip&gt;
+# list smallweb.run websites
+smallweb ls
+exit
+
+# connect to the pomdtr.me user
+ssh pomdtr.me@&lt;vps-ip&gt;
+# list pomdtr.me websites
+smallweb ls
+exit
+</code></pre>
+<p>An alias in my <code>~/.ssh/config</code> file allows me to easily connect to my VPS:</p>
+<pre><code class="language-txt">Host smallweb.run
+  HostName &lt;vps-ip&gt;
+  User smallweb.run
+
+Host pomdtr.me
+  HostName &lt;vps-ip&gt;
+  User pomdtr.me
+</code></pre>
+<p>Allowing me to just do <code>ssh smallweb.run</code> to get a shell.</p>
+<h2 id="wiring-my-server-to-cloudflare" tabindex="-1"><a href="http://localhost/posts/my-smallweb-setup/#wiring-my-server-to-cloudflare" class="header-anchor">Wiring my server to cloudflare</a></h2>
+<p>I use cloudflare as my DNS provider. In order to proxy request to my smallweb instance, I installed <code>cloudflared</code> on my VPS, and created a tunnel for each of my smallweb instance.</p>
+<p>I'm not really satisfied with this setup, and I want to switch to caddy at some point. Last time I tried, I had some issues setup up wildcard certificates, and quickly gave up.</p>
+<h2 id="syncing-my-smallweb-folder-using-mutagen" tabindex="-1"><a href="http://localhost/posts/my-smallweb-setup/#syncing-my-smallweb-folder-using-mutagen" class="header-anchor">Syncing my smallweb folder using mutagen</a></h2>
+<p>On my laptop, I use <a href="https://mutagen.io/">mutagen</a> to sync between my local folder and the remote one. It's incredibly fast, and I can work on my smallweb instance as if it was local.</p>
+<p>You can setup mutagen with 3 commands:</p>
+<pre><code class="language-sh"># install mutagen
+brew install mutagen-io/mutagen/mutagen
+# make sure the daemon is running, and start at boot
+mutagen daemon register
+# create a sync session
+mutagen sync create --name smallweb-run ~/smallweb/smallweb.run smallweb.run@&lt;vps-ip&gt;:/home/smallweb.run/smallweb --ignore_vcs --ignore=node_modules
+</code></pre>
+<p>The <code>.git</code> folders are not synced by mutagen, and I run every git command directly on my laptop. VCS systems should not be synced between devices, as it can lead to conflicts.</p>
+<p>I organize my smallweb folder like this:</p>
+<pre><code class="language-txt">/Users/pomdtr/smallweb
+├── localhost
+├── pomdtr.me
+└── smallweb.run
+</code></pre>
+<p>The <code>localhost</code> folder contains a local instance of smallweb (accessible at <code>*.localhost</code>). <code>smallweb.run</code> and <code>pomdtr.me</code> are synced with my VPS. To move apps between instances, I can just drag and drop them in the folder I want.</p>
+<p>I code using my local instance of VS Code, and each change is instantly synced. For example, I'm currrently writing this article from <code>~/smallweb.run/blog-preview</code>. When I run <code>deno task build</code>, I can instantly preview the article at <code>https://blog-preview.smallweb.run</code>.</p>
+<p>In order to access the smallweb cli, I created a little wrapper script at <code>~/.local/bin/smallweb.run</code>:</p>
+<pre><code class="language-sh">#!/bin/sh
+
+# shellcheck disable=SC2088
+exec ssh -t -o LogLevel=QUIET smallweb.run '~/.local/bin/smallweb' &quot;$@&quot;
+</code></pre>
+<p>It allows me to run <code>smallweb.run ls</code> from my terminal, as if the cli was installed locally. The only issue with this method is that you don't get completions.</p>
+<h2 id="editing-websites-from-phone%2Ftablet" tabindex="-1"><a href="http://localhost/posts/my-smallweb-setup/#editing-websites-from-phone%2Ftablet" class="header-anchor">Editing websites from phone/tablet</a></h2>
+<p>In order to edit websites from my phone, I use the webdav server built-in to smallweb, associated with <a href="https://play.google.com/store/apps/details?id=me.zhanghai.android.files&amp;hl=en_US">Material Files</a>.</p>
+<p>On my tablet, I make use of <a href="https://blink.sh/">Blink Shell</a> to ssh into my VPS, and edit files using <a href="https://kakoune.org/">kakoune</a>.</p>
+<p>But you have a plethory of options! I'm investigating bundling a vscode instance into smallweb, so you can edit your files from your browser.</p>
 ]]>
       </content:encoded>
       <pubDate>Tue, 01 Oct 2024 00:00:00 GMT</pubDate>
