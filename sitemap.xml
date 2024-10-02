@@ -2,31 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost/</loc>
-    <lastmod>2024-10-02T09:51:45.757Z</lastmod>
+    <lastmod>2024-10-02T10:01:48.818Z</lastmod>
   </url>
   <url>
     <loc>http://localhost/archive/</loc>
-    <lastmod>2024-10-02T09:51:45.743Z</lastmod>
+    <lastmod>2024-10-02T10:01:48.805Z</lastmod>
   </url>
   <url>
     <loc>http://localhost/archive/article/</loc>
-    <lastmod>2024-10-02T09:51:45.743Z</lastmod>
+    <lastmod>2024-10-02T10:01:48.805Z</lastmod>
   </url>
   <url>
     <loc>http://localhost/archive/release/</loc>
-    <lastmod>2024-10-02T09:51:45.743Z</lastmod>
+    <lastmod>2024-10-02T10:01:48.805Z</lastmod>
   </url>
   <url>
     <loc>http://localhost/author/achille-lacoin/</loc>
-    <lastmod>2024-10-02T09:51:45.743Z</lastmod>
+    <lastmod>2024-10-02T10:01:48.805Z</lastmod>
   </url>
   <url>
     <loc>http://localhost/contact/</loc>
-    <lastmod>2024-10-02T09:51:45.757Z</lastmod>
+    <lastmod>2024-10-02T10:01:48.818Z</lastmod>
   </url>
   <url>
     <loc>http://localhost/posts/my-smallweb-setup/</loc>
-    <lastmod>2024-10-01T00:00:00.000Z</lastmod>
+    <lastmod>2024-10-02T00:00:00.000Z</lastmod>
   </url>
   <url>
     <loc>http://localhost/posts/routing-design/</loc>
