@@ -97,9 +97,6 @@ mutagen daemon register
 mutagen sync create --name smallweb-run ~/smallweb/smallweb.run smallweb.run@<vps-ip>:/home/smallweb.run/smallweb --ignore_vcs --ignore=node_modules
 ```
 
-The `.git` folders are not synced by mutagen, and I run every git command directly on my laptop. VCS systems should not be synced between devices, as it can lead to conflicts.
-
-
 I organize my smallweb folder like this:
 
 ```txt
@@ -123,6 +120,14 @@ exec ssh -t -o LogLevel=QUIET smallweb.run '~/.local/bin/smallweb' "$@"
 ```
 
 It allows me to run `smallweb.run ls` from my terminal, as if the cli was installed locally. The only issue with this method is that you don't get completions.
+
+## Backing up my smallweb folder
+
+Some of my apps are versionned using git, but these github repository are only present on my laptop, and are not synced to my VPS (see the --ignore_vcs flag in the mutagen command).
+
+On the vps side, I have a single `.git` folder at the root of my smallweb folder. I then use a hourly cron job to backup this folder to a private github repository (`https://github.com/pomdtr/smallweb.run`).
+
+![smallweb.run backup](/img/smallweb-run-backup.png)
 
 ## Editing websites from phone/tablet
 
