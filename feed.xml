@@ -5,7 +5,7 @@
     <link>http://localhost/</link>
     <atom:link href="http://localhost/feed.xml" rel="self" type="application/rss+xml"/>
     <description>The latest new from Smallweb</description>
-    <lastBuildDate>Wed, 02 Oct 2024 09:37:06 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 02 Oct 2024 09:51:52 GMT</lastBuildDate>
     <language>en</language>
     <generator>Lume v2.2.2</generator>
     <item>
@@ -262,7 +262,6 @@ mutagen daemon register
 # create a sync session
 mutagen sync create --name smallweb-run ~/smallweb/smallweb.run smallweb.run@&lt;vps-ip&gt;:/home/smallweb.run/smallweb --ignore_vcs --ignore=node_modules
 </code></pre>
-<p>The <code>.git</code> folders are not synced by mutagen, and I run every git command directly on my laptop. VCS systems should not be synced between devices, as it can lead to conflicts.</p>
 <p>I organize my smallweb folder like this:</p>
 <pre><code class="language-txt">/Users/pomdtr/smallweb
 ├── localhost
@@ -278,6 +277,10 @@ mutagen sync create --name smallweb-run ~/smallweb/smallweb.run smallweb.run@&lt
 exec ssh -t -o LogLevel=QUIET smallweb.run '~/.local/bin/smallweb' &quot;$@&quot;
 </code></pre>
 <p>It allows me to run <code>smallweb.run ls</code> from my terminal, as if the cli was installed locally. The only issue with this method is that you don't get completions.</p>
+<h2 id="backing-up-my-smallweb-folder" tabindex="-1"><a href="http://localhost/posts/my-smallweb-setup/#backing-up-my-smallweb-folder" class="header-anchor">Backing up my smallweb folder</a></h2>
+<p>Some of my apps are versionned using git, but these github repository are only present on my laptop, and are not synced to my VPS (see the --ignore_vcs flag in the mutagen command).</p>
+<p>On the vps side, I have a single <code>.git</code> folder at the root of my smallweb folder. I then use a hourly cron job to backup this folder to a private github repository (<code>https://github.com/pomdtr/smallweb.run</code>).</p>
+<p><img src="http://localhost/img/smallweb-run-backup.png" alt="smallweb.run backup"></p>
 <h2 id="editing-websites-from-phone%2Ftablet" tabindex="-1"><a href="http://localhost/posts/my-smallweb-setup/#editing-websites-from-phone%2Ftablet" class="header-anchor">Editing websites from phone/tablet</a></h2>
 <p>In order to edit websites from my phone, I use the webdav server built-in to smallweb, associated with <a href="https://play.google.com/store/apps/details?id=me.zhanghai.android.files&amp;hl=en_US">Material Files</a>.</p>
 <p>On my tablet, I make use of <a href="https://blink.sh/">Blink Shell</a> to ssh into my VPS, and edit files using <a href="https://kakoune.org/">kakoune</a>.</p>
