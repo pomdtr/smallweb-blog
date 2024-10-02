@@ -1,4 +1,4 @@
 {
-    "entrypoint": "smallweb:file-server",
+    "entrypoint": "smallweb:static",
     "root": "_site"
 }
